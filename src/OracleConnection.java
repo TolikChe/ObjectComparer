@@ -2,6 +2,10 @@
  * Created by Anatoly.Cherkasov on 21.04.14.
  */
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 
 public class OracleConnection {
@@ -57,7 +61,10 @@ public class OracleConnection {
 
     }
 
-    public String getTablesInfo(String tableName) {
+    /**
+     * Генерим информацю о таблицах и колонках схемы, к которой подключились
+     */
+    public void getTablesInfo() {
 
         Info info = new Info();
 
@@ -67,17 +74,11 @@ public class OracleConnection {
                           "       partitioned, " +
                           "       temporary, " +
                           "       compression, " +
-                          "       tablespace_name, " +
                           "       logging, " +
                           "       cache, " +
                           "       table_lock, " +
-                          "       secondary, " +
-                          "       nested, " +
-                          "       row_movement, " +
-                          "       monitoring, " +
-                          "       read_only " +
                           "  FROM dba_tables" +
-                          " WHERE table_name = '"+tableName+"' AND owner = '"+ this.user +"'";
+                          " WHERE table_name like 'CMS%' AND owner = '"+ this.user +"'";
 
         // Запрос для информации о колонках таблицы
         String sqlColumn = "SELECT column_name, " +
@@ -88,68 +89,75 @@ public class OracleConnection {
                             "      nullable, " +
                             "      default_length " +
                             "  FROM dba_tab_columns" +
-                            " WHERE table_name = '"+tableName+"' AND owner = '"+ this.user +"'";
+                            " WHERE owner = '"+ this.user +"' and table_name = ";
 
-        // Создадим Оператор-объект для посылки SQL операторов в драйвер
-        Statement stmt = null;
-        try {
-            stmt = conn.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        ResultSet tableResultSet;
+        ResultSet columnResultSet;
 
         /* Получим информацию о таблице */
         try {
-
-            // Создадим запрос, путем создания ResultSet объекта
-            ResultSet rs = stmt.executeQuery (sqlTable);
-
-            // Сохраним инфрмацию о таблице
-            info.tableInfo = new TableInfo(rs);
-
-            // Закрыть результирующий набор
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println("Ошибка при получени информации о таблице " + tableName);
-            e.printStackTrace();
-            return "";
-        }
-
-        /* Получим информацию о столбцах таблицы */
-        try {
-            // Создадим Оператор-объект для посылки SQL операторов в драйвер
-            // Statement stmt = conn.createStatement();
-            // Создадим запрос, путем создания ResultSet объекта
-            ResultSet rs = stmt.executeQuery (sqlColumn);
-
-            // Сохраним инфрмацию о колонках
-            while (rs.next()){
-                info.columnInfoArrayList.add(new ColumnInfo(rs));
+            // Получим информацию о таблицах
+            Statement  tblStatement = conn.createStatement();
+            tableResultSet = tblStatement.executeQuery (sqlTable);
+            while (tableResultSet.next()) {
+                //
+                Statement colStatement = conn.createStatement();
+                // получим инфорацию о колонках таблицы
+                columnResultSet = colStatement.executeQuery (sqlColumn + "'" + tableResultSet.getString("TABLE_NAME") + "'");
+                // Создадим объект с информацией
+                TableInfo ti = new TableInfo();
+                ti.setTableInfo(tableResultSet,columnResultSet);
+                // Добавим объект в коллекцию
+                info.tableInfoArrayList.add( ti );
+                // Закроем набор
+                columnResultSet.close();
+                colStatement.close();
             }
-
             // Закрыть результирующий набор
-            rs.close();
+            tableResultSet.close();
+            tblStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
-            return "";
-        }
-
-        // Закрыть оператор
-        try {
-            stmt.close();
-        } catch (SQLException e) {
+            System.out.println("Ошибка при получени информации о таблицах");
             e.printStackTrace();
         }
-
 
         /* Теперь передадим собранную информацию построителю */
         XMLBuilder xml = new XMLBuilder(info);
 
         /* Попросим один из вариантов xml*/
         xml.genStandartXML();
-
-        return "";
     }
+
+    /**
+     * Сравниваем информацю о таблицах и колонках схемы, к которой подключились, с тем что есть в файле.
+     */
+    public void compareTablesInfo( String fileName ) {
+        /* Теперь создадим объект построитель */
+        XMLBuilder xml = new XMLBuilder();
+
+        /* Передадим ему строку с XML что бы он распихал ее по info*/
+        xml.parseStandartXml(fileName);
+
+        /* Теперь для каждой таблицы выстраиваю запрос и проверяю что такая таблица есть */
+        for (TableInfo ti : xml.info.tableInfoArrayList) {
+            // Запрос для информации о таблице
+            String sqlTable = "SELECT count(*) " +
+                                "  FROM dba_tables" +
+                                " WHERE table_name = '" + ti.name + "' AND owner = '"+ this.user +"'";
+
+            System.out.println( sqlTable );
+            /* Для каждой колонки таблицы выстраиваю запрос и проверяю что такая колонка есть */
+            for (ColumnInfo ci : ti.columnInfoArrayList) {
+                //
+                // Запрос для информации о колонке
+                String sqlColumn = "SELECT count(*)" +
+                                    "  FROM dba_tab_columns" +
+                                    " WHERE owner = '"+ this.user +"' and table_name = '"+ ti.name +"' and column_name = '" + ci.name +"'" ;
+                System.out.println( sqlColumn );
+            }
+        }
+    }
+
 
     /**
      * Получить баннер от базы. Для проверки содеинения

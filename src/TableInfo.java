@@ -12,38 +12,70 @@ public class TableInfo {
     String partitioned;
     String temporary;
     String compression;
-    String tablespace_name;
     String logging;
     String cache;
     String table_lock;
-    String secondary;
-    String nested;
-    String row_movement;
-    String monitoring;
-    String read_only;
+
 
     // Информация о колонках таблицы
     ArrayList<ColumnInfo> columnInfoArrayList;
 
     /*
+    * Получаем значения из ResultSet. Берем значения только из первой строки.
+    */
+    public void setTableInfo(ResultSet tableResultSet, ResultSet columnResultSet ) throws SQLException {
+        // Заполняем Информацию о таблице из текущего сета
+        this.name = tableResultSet.getString("TABLE_NAME");
+        this.status = tableResultSet.getString("STATUS");
+        this.partitioned = tableResultSet.getString("PARTITIONED");
+        this.temporary = tableResultSet.getString("TEMPORARY");
+        this.compression = tableResultSet.getString("COMPRESSION");
+        this.logging = tableResultSet.getString("LOGGING");
+        this.cache = tableResultSet.getString("CACHE");
+        this.table_lock = tableResultSet.getString("TABLE_LOCK");
+
+        //
+        // Добавляем информацию о колонках
+        while(columnResultSet.next()) {
+            columnInfoArrayList.add(new ColumnInfo(columnResultSet));
+        }
+    }
+
+    /*
+     * Получаем значения напрямую. Берем значения только из первой строки.
+     */
+    public void setTableInfo( String name,
+                              String status,
+                              String partitioned,
+                              String temporary,
+                              String compression,
+                              String logging,
+                              String cache,
+                              String table_lock,
+                              ArrayList<ColumnInfo> columnInfoArrayList) {
+        // Заполняем Информацию о таблице из текущего сета
+        this.name = name;
+        this.status = status;
+        this.partitioned = partitioned;
+        this.temporary = temporary;
+        this.compression = compression;
+        this.logging = logging;
+        this.cache = cache;
+        this.table_lock = table_lock;
+
+        //
+        // Добавляем информацию о колонках
+        this.columnInfoArrayList = columnInfoArrayList;
+    }
+
+
+    /*
     * Конструктор - вариант 2
     * Получаем значения из ResultSet. Берем значения только из первой строки.
     */
-    public TableInfo(ResultSet rs) throws SQLException {
-        rs.next();
-        this.name = rs.getString("TABLE_NAME");
-        this.status = rs.getString("STATUS");
-        this.partitioned = rs.getString("PARTITIONED");
-        this.temporary = rs.getString("TEMPORARY");
-        this.compression = rs.getString("COMPRESSION");
-        this.tablespace_name = rs.getString("TABLESPACE_NAME");
-        this.logging = rs.getString("LOGGING");
-        this.cache = rs.getString("CACHE");
-        this.table_lock = rs.getString("TABLE_LOCK");
-        this.secondary = rs.getString("SECONDARY");
-        this.nested = rs.getString("NESTED");
-        this.row_movement = rs.getString("ROW_MOVEMENT");
-        this.monitoring = rs.getString("MONITORING");
-        this.read_only = rs.getString("READ_ONLY");
+    public TableInfo() {
+        // Инициализация массива
+        columnInfoArrayList = new ArrayList<ColumnInfo>();
     }
+
 }
