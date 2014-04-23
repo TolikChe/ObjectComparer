@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * Описание свойств таблицы
  */
 public class TableInfo {
+    String owner;
     String name;
     String status;
     String partitioned;
@@ -16,15 +17,55 @@ public class TableInfo {
     String cache;
     String table_lock;
 
+    // Запросы для таблицы
+    ArrayList<String> sqlSelectList;
 
     // Информация о колонках таблицы
     ArrayList<ColumnInfo> columnInfoArrayList;
+
+    private void generateSqlList (){
+        sqlSelectList.add("SELECT count(*) " +
+                            "  FROM dba_tables" +
+                            " WHERE table_name = '" + name + "' AND owner = '"+ owner +"'");
+
+        sqlSelectList.add("SELECT count(*) " +
+                          "  FROM dba_tables" +
+                          " WHERE table_name = '" + name + "' AND owner = '"+ owner +"' and trim(status) = '"+status+"'");
+
+        sqlSelectList.add("SELECT count(*) " +
+                          "  FROM dba_tables" +
+                          " WHERE table_name = '" + name + "' AND owner = '"+ owner +"' and trim(partitioned) = '"+partitioned+"'");
+
+
+        sqlSelectList.add("SELECT count(*) " +
+                          "  FROM dba_tables" +
+                          " WHERE table_name = '" + name + "' AND owner = '"+ owner +"' and trim(temporary) = '"+temporary+"'");
+
+        sqlSelectList.add("SELECT count(*) " +
+                          "  FROM dba_tables" +
+                          " WHERE table_name = '" + name + "' AND owner = '"+ owner +"' and trim(compression) = '"+compression+"'");
+
+        sqlSelectList.add("SELECT count(*) " +
+                          "  FROM dba_tables" +
+                          " WHERE table_name = '" + name + "' AND owner = '"+ owner +"' and trim(logging) = '"+logging+"'");
+
+        sqlSelectList.add("SELECT count(*) " +
+                          "  FROM dba_tables" +
+                          " WHERE table_name = '" + name + "' AND owner = '"+ owner +"' and trim(cache) = '"+cache+"'");
+
+        sqlSelectList.add("SELECT count(*) " +
+                          "  FROM dba_tables" +
+                          " WHERE table_name = '" + name + "' AND owner = '" + owner + "' and trim(table_lock) = '" + table_lock + "'");
+    }
+
+
 
     /*
     * Получаем значения из ResultSet. Берем значения только из первой строки.
     */
     public void setTableInfo(ResultSet tableResultSet, ResultSet columnResultSet ) throws SQLException {
         // Заполняем Информацию о таблице из текущего сета
+        this.owner = tableResultSet.getString("OWNER");
         this.name = tableResultSet.getString("TABLE_NAME");
         this.status = tableResultSet.getString("STATUS");
         this.partitioned = tableResultSet.getString("PARTITIONED");
@@ -34,6 +75,8 @@ public class TableInfo {
         this.cache = tableResultSet.getString("CACHE");
         this.table_lock = tableResultSet.getString("TABLE_LOCK");
 
+        // Сгенерим запросы
+        generateSqlList();
         //
         // Добавляем информацию о колонках
         while(columnResultSet.next()) {
@@ -44,7 +87,8 @@ public class TableInfo {
     /*
      * Получаем значения напрямую. Берем значения только из первой строки.
      */
-    public void setTableInfo( String name,
+    public void setTableInfo( String owner,
+                              String name,
                               String status,
                               String partitioned,
                               String temporary,
@@ -54,6 +98,7 @@ public class TableInfo {
                               String table_lock,
                               ArrayList<ColumnInfo> columnInfoArrayList) {
         // Заполняем Информацию о таблице из текущего сета
+        this.owner = owner;
         this.name = name;
         this.status = status;
         this.partitioned = partitioned;
@@ -62,6 +107,9 @@ public class TableInfo {
         this.logging = logging;
         this.cache = cache;
         this.table_lock = table_lock;
+
+        // Сгенерим запросы
+        generateSqlList();
 
         //
         // Добавляем информацию о колонках
@@ -76,6 +124,7 @@ public class TableInfo {
     public TableInfo() {
         // Инициализация массива
         columnInfoArrayList = new ArrayList<ColumnInfo>();
+        sqlSelectList = new ArrayList<String>();
     }
 
 }

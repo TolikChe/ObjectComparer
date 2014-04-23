@@ -7,14 +7,15 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class OracleConnection {
-
 
     String jdbcUrl = null;
     String user = null;
     String password = null;
     Connection conn = null;
+
 
     /**
      * Констурктор. Устанавливает соединеие с базой
@@ -64,30 +65,33 @@ public class OracleConnection {
     /**
      * Генерим информацю о таблицах и колонках схемы, к которой подключились
      */
-    public void getTablesInfo() {
+    public Info getTablesInfo() {
 
         Info info = new Info();
 
         // Запрос для информации о таблице
-        String sqlTable = "SELECT table_name, " +
-                          "       status, " +
-                          "       partitioned, " +
-                          "       temporary, " +
-                          "       compression, " +
-                          "       logging, " +
-                          "       cache, " +
-                          "       table_lock, " +
+        String sqlTable = "SELECT trim(owner) as owner, "  +
+                          "       trim(table_name) as table_name, " +
+                          "       trim(status) as status, " +
+                          "       trim(partitioned) as partitioned, " +
+                          "       trim(temporary) as temporary, " +
+                          "       trim(compression) as compression, " +
+                          "       trim(logging) as logging, " +
+                          "       trim(cache) as cache, " +
+                          "       trim(table_lock) as table_lock " +
                           "  FROM dba_tables" +
                           " WHERE table_name like 'CMS%' AND owner = '"+ this.user +"'";
 
         // Запрос для информации о колонках таблицы
-        String sqlColumn = "SELECT column_name, " +
-                            "      data_type, " +
-                            "      data_length, " +
-                            "      data_precision, " +
-                            "      data_scale, " +
-                            "      nullable, " +
-                            "      default_length " +
+        String sqlColumn = "SELECT trim(owner) as owner, " +
+                            "      trim(table_name) as table_name, " +
+                            "      trim(column_name) as column_name, " +
+                            "      trim(data_type) as data_type, " +
+                            "      data_length as data_length, " +
+                            "      data_precision as data_precision, " +
+                            "      data_scale as data_scale, " +
+                            "      trim(nullable) as nullable, " +
+                            "      default_length as default_length " +
                             "  FROM dba_tab_columns" +
                             " WHERE owner = '"+ this.user +"' and table_name = ";
 
@@ -119,69 +123,34 @@ public class OracleConnection {
         } catch (SQLException e) {
             System.out.println("Ошибка при получени информации о таблицах");
             e.printStackTrace();
+            return null;
         }
 
-        /* Теперь передадим собранную информацию построителю */
-        XMLBuilder xml = new XMLBuilder(info);
-
-        /* Попросим один из вариантов xml*/
-        xml.genStandartXML();
+        // Вернем информацию об объектах
+        return info;
     }
 
     /**
      * Сравниваем информацю о таблицах и колонках схемы, к которой подключились, с тем что есть в файле.
      */
-    public void compareTablesInfo( String fileName ) {
-        /* Теперь создадим объект построитель */
-        XMLBuilder xml = new XMLBuilder();
+    public void compareTablesInfo( Info info ) {
 
-        /* Передадим ему строку с XML что бы он распихал ее по info*/
-        xml.parseStandartXml(fileName);
-
-        /* Теперь для каждой таблицы выстраиваю запрос и проверяю что такая таблица есть */
-        for (TableInfo ti : xml.info.tableInfoArrayList) {
+        /* Для каждой таблицы выстраиваю запрос и проверяю что такая таблица есть */
+        for (TableInfo ti : info.tableInfoArrayList) {
             // Запрос для информации о таблице
-            String sqlTable = "SELECT count(*) " +
-                                "  FROM dba_tables" +
-                                " WHERE table_name = '" + ti.name + "' AND owner = '"+ this.user +"'";
-
-            System.out.println( sqlTable );
+            for (String sql : ti.sqlSelectList) {
+                System.out.println(sql);
+            }
+            System.out.println("---");
             /* Для каждой колонки таблицы выстраиваю запрос и проверяю что такая колонка есть */
             for (ColumnInfo ci : ti.columnInfoArrayList) {
                 //
                 // Запрос для информации о колонке
-                String sqlColumn = "SELECT count(*)" +
-                                    "  FROM dba_tab_columns" +
-                                    " WHERE owner = '"+ this.user +"' and table_name = '"+ ti.name +"' and column_name = '" + ci.name +"'" ;
-                System.out.println( sqlColumn );
+                for (String sql : ci.sqlSelectList) {
+                    System.out.println(sql);
+                }
             }
-        }
-    }
-
-
-    /**
-     * Получить баннер от базы. Для проверки содеинения
-     */
-    public void getDbBanner() {
-
-        System.out.println("Banner:");
-
-        String sql = "select banner from v$version";
-        try {
-            // Создадим Оператор-объект для посылки SQL операторов в драйвер
-            Statement stmt = conn.createStatement();
-            // Создадим запрос, путем создания ResultSet объекта
-            ResultSet rs = stmt.executeQuery (sql);
-            // Показать все колонки и ряды из набора результатов
-            while (rs.next()) {
-                System.out.println(rs.getString("BANNER"));
-            }
-            // Закрыть результирующий набор
-            rs.close();
-            // Закрыть оператор
-            stmt.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("----------------------------------");
         }
     }
 

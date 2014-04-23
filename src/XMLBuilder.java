@@ -1,9 +1,13 @@
 import org.w3c.dom.*;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSSerializer;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -28,17 +32,21 @@ public class XMLBuilder {
 
     Info info = new Info();
 
-    public XMLBuilder() {
-
-    }
+    public XMLBuilder() {}
 
     public XMLBuilder( Info info ) {
         this.info = info;
     }
 
-    /* Сгенерим xml на основе info и запишем его в файл */
-    public void genStandartXML () {
+    /* Преобразуем doc в String */
+    private String getStringFromDoc(Document doc)    {
+        DOMImplementationLS domImplementation = (DOMImplementationLS) doc.getImplementation();
+        LSSerializer lsSerializer = domImplementation.createLSSerializer();
+        return lsSerializer.writeToString(doc);
+    }
 
+    /* Сгенерим xml на основе info и запишем его в файл */
+    public String genStandartXML () {
         try {
 
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -69,6 +77,11 @@ public class XMLBuilder {
                 Element sTblTableName = doc.createElement("sTableName");
                 sTblTableName.appendChild(doc.createTextNode(tbl.name));
                 tableElement.appendChild(sTblTableName);
+
+                /* owner */
+                Element sTblOwner = doc.createElement("sOwner");
+                sTblOwner.appendChild(doc.createTextNode(tbl.owner));
+                tableElement.appendChild(sTblOwner);
 
                 /* Status */
                 Element sTblStatus = doc.createElement("sStatus");
@@ -120,6 +133,18 @@ public class XMLBuilder {
                     Element columnElement = doc.createElement("Column");
                     columnsElement.appendChild(columnElement);
 
+                    /* Table_name */
+                    Element sColTableName = doc.createElement("sTableName");
+                    if (col.table_name != null)
+                        sColTableName.appendChild(doc.createTextNode(col.table_name));
+                    columnElement.appendChild(sColTableName);
+
+                    /* owner */
+                    Element sColOwner = doc.createElement("sOwner");
+                    if (col.owner != null)
+                        sColOwner.appendChild(doc.createTextNode(col.owner));
+                    columnElement.appendChild(sColOwner);
+
                     // column_name
                     Element sColName = doc.createElement("sColumnName");
                     if (col.name != null)
@@ -165,74 +190,43 @@ public class XMLBuilder {
                     columnElement.appendChild(sColDefaultLength);
                 }
             }
-
-            // write the content into xml file
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            // Output to file
-            StreamResult result = new StreamResult(new File("D:\\file.xml"));
-
-            // Output to console
-            // StreamResult result = new StreamResult(System.out);
-
-            transformer.transform(source, result);
-
-            System.out.println("File saved!");
-
+            // Вернем результат
+            return getStringFromDoc(doc);
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
-        } catch (TransformerException tfe) {
-            tfe.printStackTrace();
+            return null;
         }
     }
 
     /* Заполним info на основе пришедшей строки */
-    public void parseStandartXml (String fileName)
+    public void parseStandartXml (String strXML)
     {
         Document doc = null;
         try {
-            File fXmlFile = new File(fileName);
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            doc = dBuilder.parse(fXmlFile);
+            DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            InputSource is = new InputSource();
+            is.setCharacterStream(new StringReader(strXML));
+
+            doc = db.parse(is);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
 
         doc.getDocumentElement().normalize();
 
-        // System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-
         NodeList tablesList = doc.getElementsByTagName("Table");
-
-        // System.out.println("----------------------------");
 
         for (int x = 0; x < tablesList.getLength(); x++) {
 
             Node tbl = tablesList.item(x);
 
-            // System.out.println("\nCurrent Element :" + tbl.getNodeName());
-
             if (tbl.getNodeType() == Node.ELEMENT_NODE) {
 
-                //System.out.println(" ");
-                //System.out.println("------------ tbl ----------------");
                 Element eTbl = (Element) tbl;
-                /*
-                System.out.println("sTableName : " + eTbl.getElementsByTagName("sTableName").item(0).getTextContent());
-                System.out.println("sStatus : " + eTbl.getElementsByTagName("sStatus").item(0).getTextContent());
-                System.out.println("sPartitioned : " + eTbl.getElementsByTagName("sPartitioned").item(0).getTextContent());
-                System.out.println("sTemporary : " + eTbl.getElementsByTagName("sTemporary").item(0).getTextContent());
-                System.out.println("sCompression : " + eTbl.getElementsByTagName("sCompression").item(0).getTextContent());
-                System.out.println("sLogging : " + eTbl.getElementsByTagName("sLogging").item(0).getTextContent());
-                System.out.println("sCache : " + eTbl.getElementsByTagName("sCache").item(0).getTextContent());
-                System.out.println("sTableLock : " + eTbl.getElementsByTagName("sTableLock").item(0).getTextContent());
-                */
                 NodeList columnsList = eTbl.getElementsByTagName("Column");
 
                 // Информация о колонках таблицы
@@ -242,23 +236,14 @@ public class XMLBuilder {
 
                     Node col = columnsList.item(y);
 
-                    // System.out.println("\nCurrent Element :" + col.getNodeName());
-
                     if (col.getNodeType() == Node.ELEMENT_NODE) {
 
-                        //System.out.println(" ");
-                        //System.out.println("------------ col ----------------");
                         Element eCol = (Element) col;
-                        /*
-                        System.out.println("sColumnName : " + eCol.getElementsByTagName("sColumnName").item(0).getTextContent());
-                        System.out.println("sDataType : " + eCol.getElementsByTagName("sDataType").item(0).getTextContent());
-                        System.out.println("iDataLength : " + eCol.getElementsByTagName("iDataLength").item(0).getTextContent());
-                        System.out.println("iDataPrecision : " + eCol.getElementsByTagName("iDataPrecision").item(0).getTextContent());
-                        System.out.println("iDataScale : " + eCol.getElementsByTagName("iDataScale").item(0).getTextContent());
-                        System.out.println("sNullable : " + eCol.getElementsByTagName("sNullable").item(0).getTextContent());
-                        System.out.println("iDefaultLength : " + eCol.getElementsByTagName("iDefaultLength").item(0).getTextContent());
-                        */
-                        columnInfoArrayList.add(new ColumnInfo(eCol.getElementsByTagName("sColumnName").item(0).getTextContent(),
+
+                        columnInfoArrayList.add(new ColumnInfo(
+                                                               eCol.getElementsByTagName("sOwner").item(0).getTextContent(),
+                                                               eCol.getElementsByTagName("sTableName").item(0).getTextContent(),
+                                                               eCol.getElementsByTagName("sColumnName").item(0).getTextContent(),
                                                                eCol.getElementsByTagName("sDataType").item(0).getTextContent(),
                                                                eCol.getElementsByTagName("iDataLength").item(0).getTextContent(),
                                                                eCol.getElementsByTagName("iDataPrecision").item(0).getTextContent(),
@@ -269,7 +254,8 @@ public class XMLBuilder {
                 }
 
                 TableInfo ti = new TableInfo();
-                ti.setTableInfo(eTbl.getElementsByTagName("sTableName").item(0).getTextContent(),
+                ti.setTableInfo(eTbl.getElementsByTagName("sOwner").item(0).getTextContent(),
+                                eTbl.getElementsByTagName("sTableName").item(0).getTextContent(),
                                 eTbl.getElementsByTagName("sStatus").item(0).getTextContent(),
                                 eTbl.getElementsByTagName("sPartitioned").item(0).getTextContent(),
                                 eTbl.getElementsByTagName("sTemporary").item(0).getTextContent(),
