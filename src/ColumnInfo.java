@@ -19,8 +19,9 @@ public class ColumnInfo {
     String default_length;
 
     // Запросы для таблицы
-    ArrayList<String> sqlSelectList;
+    //private ArrayList<String> sqlSelectList;
 
+    /*
     private void generateSqlList (){
 
         sqlSelectList.add("SELECT count(*) " +
@@ -51,6 +52,10 @@ public class ColumnInfo {
                 "  FROM dba_tab_columns" +
                 " WHERE owner = '"+ owner +"' and table_name = '"+ table_name +"' and column_name = '" + name +"' and default_length = "+default_length);
     }
+    */
+
+    public ColumnInfo() {
+    }
 
     /*
     * Задаем значения из ResultSet для значений колонки.
@@ -66,8 +71,8 @@ public class ColumnInfo {
         this.nullable = rs.getString("NULLABLE");
         this.default_length = rs.getString("DEFAULT_LENGTH");
 
-        sqlSelectList = new ArrayList<String>();
-        generateSqlList();
+        //sqlSelectList = new ArrayList<String>();
+        //generateSqlList();
     }
 
     /*
@@ -92,7 +97,7 @@ public class ColumnInfo {
         this.nullable = nullable;
         this.default_length = default_length;
 
-        sqlSelectList = new ArrayList<String>();
-        generateSqlList();
+        //sqlSelectList = new ArrayList<String>();
+        //generateSqlList();
     }
 }

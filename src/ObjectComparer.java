@@ -10,6 +10,8 @@ public class ObjectComparer {
          * Тут в зависимости от параметра мы либо делаем xml файл со структурой,
          * либо сравниваем существующий xml файл с тем что есть в базе
          */
+
+
         String dbUrl = "jdbc:oracle:thin:@//srv2-ora20.net.billing.ru:1521/ntdb10.net.billing.ru";
         String dbUser = "CRM_DAILY";
         String dbPass = "CRM_DAILY";

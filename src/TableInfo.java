@@ -18,11 +18,12 @@ public class TableInfo {
     String table_lock;
 
     // Запросы для таблицы
-    ArrayList<String> sqlSelectList;
+    //private ArrayList<String> sqlSelectList;
 
     // Информация о колонках таблицы
     ArrayList<ColumnInfo> columnInfoArrayList;
 
+    /*
     private void generateSqlList (){
         sqlSelectList.add("SELECT count(*) " +
                             "  FROM dba_tables" +
@@ -57,7 +58,7 @@ public class TableInfo {
                           "  FROM dba_tables" +
                           " WHERE table_name = '" + name + "' AND owner = '" + owner + "' and trim(table_lock) = '" + table_lock + "'");
     }
-
+    */
 
 
     /*
@@ -76,7 +77,7 @@ public class TableInfo {
         this.table_lock = tableResultSet.getString("TABLE_LOCK");
 
         // Сгенерим запросы
-        generateSqlList();
+        // generateSqlList();
         //
         // Добавляем информацию о колонках
         while(columnResultSet.next()) {
@@ -109,7 +110,7 @@ public class TableInfo {
         this.table_lock = table_lock;
 
         // Сгенерим запросы
-        generateSqlList();
+        // generateSqlList();
 
         //
         // Добавляем информацию о колонках
@@ -124,7 +125,7 @@ public class TableInfo {
     public TableInfo() {
         // Инициализация массива
         columnInfoArrayList = new ArrayList<ColumnInfo>();
-        sqlSelectList = new ArrayList<String>();
+        // sqlSelectList = new ArrayList<String>();
     }
 
 }

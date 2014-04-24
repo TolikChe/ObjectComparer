@@ -49,10 +49,12 @@ public class PosibleActions {
     }
 
     /* Эта функция, открывает файл и на основе него сравнивает есть ли объекты в базе с теме же параметрами */
+    /* Делаем следующее. Считываем XML из файла в структуру. */
+    /* Строим вторую структуру по текущему состоянию. */
+    /* Начинаем сравнивать поэлементно. На выходе будет XML новой структуры. */
     public void compare ( String fileName, String dbUser, String dbPass, String dbUrl ) {
 
         String strXML = "";
-
         // Прочитаем текст из файла
         File file = new File(fileName);
         try{
@@ -84,17 +86,40 @@ public class PosibleActions {
         XMLBuilder xml = new XMLBuilder();
         xml.parseStandartXml(strXML);
 
-        // Теперь на основе этого объекта info построим запросы, которые отправим к базе и узнаем какие объекты совпадают а какие нет
+
+        // Получим текущую информацию о таблицах
         // Соединимся с базой
         OracleConnection conn = new OracleConnection (dbUser, dbPass, dbUrl);
-
-        // Получим информацию о таблицах
-        conn.compareTablesInfo( xml.info );
-
+        // Получим текущую информацию о таблицах
+        Info info = conn.getTablesInfo();
         // Закроем соединение
         conn.closeConnection();
 
+
+
+        // Запустим сравнение
+        strXML = xml.compareStandartXML(info);
+
+        // Запишем XML в файл
+        File file_diff = new File(fileName + "_diff");
+
+        FileOutputStream fop = null;
+        try {
+            fop = new FileOutputStream(file_diff);
+
+            // if file doesn't exists, then create it
+            if (!file_diff.exists()) {
+                file_diff.createNewFile();
+            }
+
+            fop.write(strXML.getBytes());
+            fop.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error in writing diff to file");
+        }
+
         System.out.println("Done");
     }
-
 }

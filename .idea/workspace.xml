@@ -55,6 +55,23 @@
       </breakpoint>
     </breakpoint_any>
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <line_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/src/XMLBuilder.java" line="210" class="XMLBuilder" package="">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -67,7 +84,7 @@
       <file leaf-file-name="ObjectComparer.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ObjectComparer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="34" selection-start="496" selection-end="496" vertical-scroll-proportion="0.0" vertical-offset="86" max-vertical-offset="833">
+            <state line="16" column="36" selection-start="500" selection-end="500" vertical-scroll-proportion="0.0" vertical-offset="5" max-vertical-offset="867">
               <folding />
             </state>
           </provider>
@@ -76,16 +93,16 @@
       <file leaf-file-name="PosibleActions.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PosibleActions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="41" selection-start="1135" selection-end="1135" vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="1802">
+            <state line="93" column="17" selection-start="3145" selection-end="3145" vertical-scroll-proportion="0.0" vertical-offset="1582" max-vertical-offset="2227">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OracleConnection.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="OracleConnection.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/OracleConnection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="149" column="44" selection-start="5788" selection-end="5788" vertical-scroll-proportion="0.6427256" vertical-offset="467" max-vertical-offset="1292">
+            <state line="156" column="6" selection-start="5914" selection-end="5914" vertical-scroll-proportion="0.0" vertical-offset="457" max-vertical-offset="1326">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#OracleConnection#0;class#OracleConnection#0" expanded="false" />
@@ -98,10 +115,10 @@
       <file leaf-file-name="XMLBuilder.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/XMLBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="140" column="0" selection-start="5607" selection-end="5607" vertical-scroll-proportion="0.0" vertical-offset="2208" max-vertical-offset="4726">
+            <state line="1273" column="34" selection-start="66764" selection-end="66764" vertical-scroll-proportion="0.0" vertical-offset="21200" max-vertical-offset="22049">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#9444#9456#0" expanded="true" />
+                <element signature="e#9835#9847#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -110,16 +127,16 @@
       <file leaf-file-name="TableInfo.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/TableInfo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="89" column="30" selection-start="3507" selection-end="3519" vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="2278">
+            <state line="20" column="6" selection-start="411" selection-end="411" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2295">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ColumnInfo.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ColumnInfo.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ColumnInfo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="43" selection-start="2362" selection-end="2362" vertical-scroll-proportion="0.0" vertical-offset="771" max-vertical-offset="1734">
+            <state line="100" column="10" selection-start="3774" selection-end="3774" vertical-scroll-proportion="1.305709" vertical-offset="957" max-vertical-offset="1819">
               <folding />
             </state>
           </provider>
@@ -145,12 +162,12 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/src/Info.java" />
-        <option value="$PROJECT_DIR$/src/PosibleActions.java" />
-        <option value="$PROJECT_DIR$/src/TableInfo.java" />
         <option value="$PROJECT_DIR$/src/ObjectComparer.java" />
-        <option value="$PROJECT_DIR$/src/ColumnInfo.java" />
+        <option value="$PROJECT_DIR$/src/PosibleActions.java" />
         <option value="$PROJECT_DIR$/src/XMLBuilder.java" />
         <option value="$PROJECT_DIR$/src/OracleConnection.java" />
+        <option value="$PROJECT_DIR$/src/TableInfo.java" />
+        <option value="$PROJECT_DIR$/src/ColumnInfo.java" />
       </list>
     </option>
   </component>
@@ -460,7 +477,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1688" height="1006" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -479,7 +496,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24969475" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35923424" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35923424" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -532,7 +549,7 @@
         <state line="136" column="13" selection-start="5367" selection-end="5367" vertical-scroll-proportion="0.0" vertical-offset="808" max-vertical-offset="2822">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9444#9456#0" expanded="true" />
+            <element signature="e#9835#9847#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -581,7 +598,7 @@
         <state line="66" column="31" selection-start="2102" selection-end="2102" vertical-scroll-proportion="0.0" vertical-offset="1122" max-vertical-offset="1700">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9444#9456#0" expanded="true" />
+            <element signature="e#9835#9847#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -624,13 +641,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/TableInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="30" selection-start="3507" selection-end="3519" vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="2278">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/src.zip!/java/sql/DriverManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="570" column="0" selection-start="21043" selection-end="21043" vertical-scroll-proportion="0.33333334" vertical-offset="8846" max-vertical-offset="10047">
@@ -640,43 +650,50 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ObjectComparer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="34" selection-start="496" selection-end="496" vertical-scroll-proportion="0.0" vertical-offset="86" max-vertical-offset="833">
+        <state line="16" column="36" selection-start="500" selection-end="500" vertical-scroll-proportion="0.0" vertical-offset="5" max-vertical-offset="867">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ColumnInfo.java">
+    <entry file="file://$PROJECT_DIR$/src/PosibleActions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="43" selection-start="2362" selection-end="2362" vertical-scroll-proportion="0.0" vertical-offset="771" max-vertical-offset="1734">
+        <state line="93" column="17" selection-start="3145" selection-end="3145" vertical-scroll-proportion="0.0" vertical-offset="1331" max-vertical-offset="2227">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/XMLBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="0" selection-start="5607" selection-end="5607" vertical-scroll-proportion="0.0" vertical-offset="2208" max-vertical-offset="4726">
+        <state line="1273" column="34" selection-start="66764" selection-end="66764" vertical-scroll-proportion="0.0" vertical-offset="21200" max-vertical-offset="22049">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9444#9456#0" expanded="true" />
+            <element signature="e#9835#9847#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PosibleActions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="41" selection-start="1135" selection-end="1135" vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="1802">
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/OracleConnection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="149" column="44" selection-start="5788" selection-end="5788" vertical-scroll-proportion="0.6427256" vertical-offset="467" max-vertical-offset="1292">
+        <state line="156" column="6" selection-start="5914" selection-end="5914" vertical-scroll-proportion="0.0" vertical-offset="457" max-vertical-offset="1326">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#OracleConnection#0;class#OracleConnection#0" expanded="false" />
             <element signature="method#getTablesInfo#0;class#OracleConnection#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TableInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="6" selection-start="411" selection-end="411" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2295">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ColumnInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="100" column="10" selection-start="3774" selection-end="3774" vertical-scroll-proportion="1.305709" vertical-offset="957" max-vertical-offset="1819">
+          <folding />
         </state>
       </provider>
     </entry>
