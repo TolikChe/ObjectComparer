@@ -1,3 +1,6 @@
+import javax.xml.transform.*;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 
 
@@ -101,7 +104,7 @@ public class PosibleActions {
         strXML = xml.compareStandartXML(info);
 
         // Запишем XML в файл
-        File file_diff = new File(fileName + "_diff");
+        File file_diff = new File("dif_file.xml");
 
         FileOutputStream fop = null;
         try {
@@ -118,6 +121,18 @@ public class PosibleActions {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error in writing diff to file");
+        }
+
+        try {
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Source xslt = new StreamSource(new File("dif_file.xsl"));
+            Transformer transformer = factory.newTransformer(xslt);
+
+            // Source text = new StreamSource(new File("dif_file.xml"));
+            Source text = new StreamSource( new ByteArrayInputStream( strXML.getBytes()));
+            transformer.transform(text, new StreamResult("output.html"));
+        } catch (TransformerException e) {
+            e.printStackTrace();
         }
 
         System.out.println("Done");

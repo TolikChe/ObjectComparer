@@ -35,7 +35,7 @@ public class XMLBuilder {
 
     /* Преобразуем doc в String */
     private String getStringFromDoc(Document doc)    {
-        /*
+
         try {
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer transformer = null;
@@ -52,13 +52,13 @@ public class XMLBuilder {
         }
 
         return null;
-        */
 
 
+/*
         DOMImplementationLS domImplementation = (DOMImplementationLS) doc.getImplementation();
         LSSerializer lsSerializer = domImplementation.createLSSerializer();
         return lsSerializer.writeToString(doc);
-
+*/
 
     }
 
@@ -336,11 +336,11 @@ public class XMLBuilder {
                     Element sTblOwner = doc.createElement("sOwner");
                     tableElement.appendChild(sTblOwner);
 
-                    Element sTblOwnerOld = doc.createElement("old");
+                    Element sTblOwnerOld = doc.createElement("file");
                     sTblOwnerOld.appendChild(doc.createTextNode(fileTbl.owner));
                     sTblOwner.appendChild(sTblOwnerOld);
 
-                    Element sTblOwnerNew = doc.createElement("new");
+                    Element sTblOwnerNew = doc.createElement("base");
                     sTblOwnerNew.appendChild(doc.createTextNode(baseTbl.owner));
                     sTblOwner.appendChild(sTblOwnerNew);
 
@@ -357,12 +357,12 @@ public class XMLBuilder {
                     Element sTblStatus = doc.createElement("sStatus");
                     tableElement.appendChild(sTblStatus);
 
-                    Element sTblStatusOld = doc.createElement("old");
+                    Element sTblStatusOld = doc.createElement("file");
                     if (fileTbl.status != null)
                         sTblStatusOld.appendChild(doc.createTextNode(fileTbl.status));
                     sTblStatus.appendChild(sTblStatusOld);
 
-                    Element sTblStatusNew = doc.createElement("new");
+                    Element sTblStatusNew = doc.createElement("base");
                     if (baseTbl.status != null)
                         sTblStatusNew.appendChild(doc.createTextNode(baseTbl.status));
                     sTblStatus.appendChild(sTblStatusNew);
@@ -380,12 +380,12 @@ public class XMLBuilder {
                     Element sTblPartitioned = doc.createElement("sPartitioned");
                     tableElement.appendChild(sTblPartitioned);
 
-                    Element sTblPartitionedOld = doc.createElement("old");
+                    Element sTblPartitionedOld = doc.createElement("file");
                     if (fileTbl.partitioned != null)
                         sTblPartitionedOld.appendChild(doc.createTextNode(fileTbl.partitioned));
                     sTblPartitioned.appendChild(sTblPartitionedOld);
 
-                    Element sTblPartitionedNew = doc.createElement("new");
+                    Element sTblPartitionedNew = doc.createElement("base");
                     if (baseTbl.partitioned != null)
                         sTblPartitionedNew.appendChild(doc.createTextNode(baseTbl.partitioned));
                     sTblPartitioned.appendChild(sTblPartitionedNew);
@@ -403,12 +403,12 @@ public class XMLBuilder {
                     Element sTblTemporary = doc.createElement("sTemporary");
                     tableElement.appendChild(sTblTemporary);
 
-                    Element sTblTemporaryOld = doc.createElement("old");
+                    Element sTblTemporaryOld = doc.createElement("file");
                     if (fileTbl.temporary != null)
                         sTblTemporaryOld.appendChild(doc.createTextNode(fileTbl.temporary));
                     sTblTemporary.appendChild(sTblTemporaryOld);
 
-                    Element sTblTemporaryNew = doc.createElement("new");
+                    Element sTblTemporaryNew = doc.createElement("base");
                     if (baseTbl.temporary != null)
                         sTblTemporaryNew.appendChild(doc.createTextNode(baseTbl.temporary));
                     sTblTemporary.appendChild(sTblTemporaryNew);
@@ -426,12 +426,12 @@ public class XMLBuilder {
                     Element sTblCompression = doc.createElement("sCompression");
                     tableElement.appendChild(sTblCompression);
 
-                    Element sTblCompressionOld = doc.createElement("old");
+                    Element sTblCompressionOld = doc.createElement("file");
                     if (fileTbl.compression != null)
                         sTblCompressionOld.appendChild(doc.createTextNode(fileTbl.compression));
                     sTblCompression.appendChild(sTblCompressionOld);
 
-                    Element sTblCompressionNew = doc.createElement("new");
+                    Element sTblCompressionNew = doc.createElement("base");
                     if (baseTbl.compression != null)
                         sTblCompressionNew.appendChild(doc.createTextNode(baseTbl.compression));
                     sTblCompression.appendChild(sTblCompressionNew);
@@ -449,12 +449,12 @@ public class XMLBuilder {
                     Element sTblLogging = doc.createElement("sLogging");
                     tableElement.appendChild(sTblLogging);
 
-                    Element sTblLoggingOld = doc.createElement("old");
+                    Element sTblLoggingOld = doc.createElement("file");
                     if (fileTbl.logging != null)
                         sTblLoggingOld.appendChild(doc.createTextNode(fileTbl.logging));
                     sTblLogging.appendChild(sTblLoggingOld);
 
-                    Element sTblLoggingNew = doc.createElement("new");
+                    Element sTblLoggingNew = doc.createElement("base");
                     if (baseTbl.logging != null)
                         sTblLoggingNew.appendChild(doc.createTextNode(baseTbl.logging));
                     sTblLogging.appendChild(sTblLoggingNew);
@@ -472,12 +472,12 @@ public class XMLBuilder {
                     Element sTblCache = doc.createElement("sCache");
                     tableElement.appendChild(sTblCache);
 
-                    Element sTblCacheOld = doc.createElement("old");
+                    Element sTblCacheOld = doc.createElement("file");
                     if (fileTbl.cache != null)
                         sTblCacheOld.appendChild(doc.createTextNode(fileTbl.cache));
                     sTblCache.appendChild(sTblCacheOld);
 
-                    Element sTblCacheNew = doc.createElement("new");
+                    Element sTblCacheNew = doc.createElement("base");
                     if (baseTbl.cache != null)
                         sTblCacheNew.appendChild(doc.createTextNode(baseTbl.cache));
                     sTblCache.appendChild(sTblCacheNew);
@@ -495,12 +495,12 @@ public class XMLBuilder {
                     Element sTblTableLock = doc.createElement("sTableLock");
                     tableElement.appendChild(sTblTableLock);
 
-                    Element sTblTableLockOld = doc.createElement("old");
+                    Element sTblTableLockOld = doc.createElement("file");
                     if (fileTbl.table_lock != null)
                         sTblTableLockOld.appendChild(doc.createTextNode(fileTbl.table_lock));
                     sTblTableLock.appendChild(sTblTableLockOld);
 
-                    Element sTblTableLockNew = doc.createElement("new");
+                    Element sTblTableLockNew = doc.createElement("base");
                     if (baseTbl.table_lock != null)
                         sTblTableLockNew.appendChild(doc.createTextNode(baseTbl.table_lock));
                     sTblTableLock.appendChild(sTblTableLockNew);
@@ -555,12 +555,12 @@ public class XMLBuilder {
                                 Element sColOwner = doc.createElement("sOwner");
                                 columnElement.appendChild(sColOwner);
 
-                                Element sColOwnerOld = doc.createElement("old");
+                                Element sColOwnerOld = doc.createElement("file");
                                 if (fileCol.owner != null)
                                     sColOwnerOld.appendChild(doc.createTextNode(fileCol.owner));
                                 sColOwner.appendChild(sColOwnerOld);
 
-                                Element sColOwnerNew = doc.createElement("new");
+                                Element sColOwnerNew = doc.createElement("base");
                                 if (baseCol.owner != null)
                                     sColOwnerNew.appendChild(doc.createTextNode(baseCol.owner));
                                 sColOwner.appendChild(sColOwnerNew);
@@ -578,12 +578,12 @@ public class XMLBuilder {
                                 Element sColDataType = doc.createElement("sDataType");
                                 columnElement.appendChild(sColDataType);
 
-                                Element sColDataTypeOld = doc.createElement("old");
+                                Element sColDataTypeOld = doc.createElement("file");
                                 if (fileCol.data_type != null)
                                     sColDataTypeOld.appendChild(doc.createTextNode(fileCol.data_type));
                                 sColDataType.appendChild(sColDataTypeOld);
 
-                                Element sColDataTypeNew = doc.createElement("new");
+                                Element sColDataTypeNew = doc.createElement("base");
                                 if (baseCol.data_type != null)
                                     sColDataTypeNew.appendChild(doc.createTextNode(baseCol.data_type));
                                 sColDataType.appendChild(sColDataTypeNew);
@@ -601,12 +601,12 @@ public class XMLBuilder {
                                 Element sColDataLength = doc.createElement("iDataLength");
                                 columnElement.appendChild(sColDataLength);
 
-                                Element sColDataLengthOld = doc.createElement("old");
+                                Element sColDataLengthOld = doc.createElement("file");
                                 if (fileCol.data_length != null)
                                     sColDataLengthOld.appendChild(doc.createTextNode(fileCol.data_length));
                                 sColDataLength.appendChild(sColDataLengthOld);
 
-                                Element sColDataLengthNew = doc.createElement("new");
+                                Element sColDataLengthNew = doc.createElement("base");
                                 if (baseCol.data_length != null)
                                     sColDataLengthNew.appendChild(doc.createTextNode(baseCol.data_length));
                                 sColDataLength.appendChild(sColDataLengthNew);
@@ -624,12 +624,12 @@ public class XMLBuilder {
                                 Element sColDataPrecision = doc.createElement("iDataPrecision");
                                 columnElement.appendChild(sColDataPrecision);
 
-                                Element sColDataPrecisionOld = doc.createElement("old");
+                                Element sColDataPrecisionOld = doc.createElement("file");
                                 if (fileCol.data_precision != null)
                                     sColDataPrecisionOld.appendChild(doc.createTextNode(fileCol.data_precision));
                                 sColDataPrecision.appendChild(sColDataPrecisionOld);
 
-                                Element sColDataPrecisionNew = doc.createElement("new");
+                                Element sColDataPrecisionNew = doc.createElement("base");
                                 if (baseCol.data_precision != null)
                                     sColDataPrecisionNew.appendChild(doc.createTextNode(baseCol.data_precision));
                                 sColDataPrecision.appendChild(sColDataPrecisionNew);
@@ -647,12 +647,12 @@ public class XMLBuilder {
                                 Element sColDataScale = doc.createElement("iDataScale");
                                 columnElement.appendChild(sColDataScale);
 
-                                Element sColDataScaleOld = doc.createElement("old");
+                                Element sColDataScaleOld = doc.createElement("file");
                                 if (fileCol.data_scale != null)
                                     sColDataScaleOld.appendChild(doc.createTextNode(fileCol.data_scale));
                                 sColDataScale.appendChild(sColDataScaleOld);
 
-                                Element sColDataScalenNew = doc.createElement("new");
+                                Element sColDataScalenNew = doc.createElement("base");
                                 if (baseCol.data_scale != null)
                                     sColDataScalenNew.appendChild(doc.createTextNode(baseCol.data_scale));
                                 sColDataScale.appendChild(sColDataScalenNew);
@@ -670,12 +670,12 @@ public class XMLBuilder {
                                 Element sColNullable = doc.createElement("sNullable");
                                 columnElement.appendChild(sColNullable);
 
-                                Element sColNullableOld = doc.createElement("old");
+                                Element sColNullableOld = doc.createElement("file");
                                 if (fileCol.nullable != null)
                                     sColNullableOld.appendChild(doc.createTextNode(fileCol.nullable));
                                 sColNullable.appendChild(sColNullableOld);
 
-                                Element sColNullableNew = doc.createElement("new");
+                                Element sColNullableNew = doc.createElement("base");
                                 if (baseCol.nullable != null)
                                     sColNullableNew.appendChild(doc.createTextNode(baseCol.nullable));
                                 sColNullable.appendChild(sColNullableNew);
@@ -693,12 +693,12 @@ public class XMLBuilder {
                                 Element sColDefaultLength = doc.createElement("iDefaultLength");
                                 columnElement.appendChild(sColDefaultLength);
 
-                                Element sColDefaultLengthOld = doc.createElement("old");
+                                Element sColDefaultLengthOld = doc.createElement("file");
                                 if (fileCol.default_length != null)
                                     sColDefaultLengthOld.appendChild(doc.createTextNode(fileCol.default_length));
                                 sColDefaultLength.appendChild(sColDefaultLengthOld);
 
-                                Element sColDefaultLengthNew = doc.createElement("new");
+                                Element sColDefaultLengthNew = doc.createElement("base");
                                 if (baseCol.default_length != null)
                                     sColDefaultLengthNew.appendChild(doc.createTextNode(baseCol.default_length));
                                 sColDefaultLength.appendChild(sColDefaultLengthNew);
@@ -741,12 +741,12 @@ public class XMLBuilder {
                             Element sColOwner = doc.createElement("sOwner");
                             columnElement.appendChild(sColOwner);
 
-                            Element sColOwnerOld = doc.createElement("old");
+                            Element sColOwnerOld = doc.createElement("file");
                             if (fileCol.owner != null)
                                 sColOwnerOld.appendChild(doc.createTextNode(fileCol.owner));
                             sColOwner.appendChild(sColOwnerOld);
 
-                            Element sColOwnerNew = doc.createElement("new");
+                            Element sColOwnerNew = doc.createElement("base");
                             sColOwner.appendChild(sColOwnerNew);
 
                             Element sColOwnerState = doc.createElement("state");
@@ -757,12 +757,12 @@ public class XMLBuilder {
                             Element sColDataType = doc.createElement("sDataType");
                             columnElement.appendChild(sColDataType);
 
-                            Element sColDataTypeOld = doc.createElement("old");
+                            Element sColDataTypeOld = doc.createElement("file");
                             if (fileCol.data_type != null)
                                 sColDataTypeOld.appendChild(doc.createTextNode(fileCol.data_type));
                             sColDataType.appendChild(sColDataTypeOld);
 
-                            Element sColDataTypeNew = doc.createElement("new");
+                            Element sColDataTypeNew = doc.createElement("base");
                             sColDataType.appendChild(sColDataTypeNew);
 
                             Element sColDataTypeState = doc.createElement("state");
@@ -773,12 +773,12 @@ public class XMLBuilder {
                             Element sColDataLength = doc.createElement("iDataLength");
                             columnElement.appendChild(sColDataLength);
 
-                            Element sColDataLengthOld = doc.createElement("old");
+                            Element sColDataLengthOld = doc.createElement("file");
                             if (fileCol.data_length != null)
                                 sColDataLengthOld.appendChild(doc.createTextNode(fileCol.data_length));
                             sColDataLength.appendChild(sColDataLengthOld);
 
-                            Element sColDataLengthNew = doc.createElement("new");
+                            Element sColDataLengthNew = doc.createElement("base");
                             sColDataLength.appendChild(sColDataLengthNew);
 
                             Element sColDataLengthState = doc.createElement("state");
@@ -789,12 +789,12 @@ public class XMLBuilder {
                             Element sColDataPrecision = doc.createElement("iDataPrecision");
                             columnElement.appendChild(sColDataPrecision);
 
-                            Element sColDataPrecisionOld = doc.createElement("old");
+                            Element sColDataPrecisionOld = doc.createElement("file");
                             if (fileCol.data_precision != null)
                                 sColDataPrecisionOld.appendChild(doc.createTextNode(fileCol.data_precision));
                             sColDataPrecision.appendChild(sColDataPrecisionOld);
 
-                            Element sColDataPrecisionNew = doc.createElement("new");
+                            Element sColDataPrecisionNew = doc.createElement("base");
                             sColDataPrecision.appendChild(sColDataPrecisionNew);
 
                             Element sColDataPrecisionState = doc.createElement("state");
@@ -805,12 +805,12 @@ public class XMLBuilder {
                             Element sColDataScale = doc.createElement("iDataScale");
                             columnElement.appendChild(sColDataScale);
 
-                            Element sColDataScaleOld = doc.createElement("old");
+                            Element sColDataScaleOld = doc.createElement("file");
                             if (fileCol.data_scale != null)
                                 sColDataScaleOld.appendChild(doc.createTextNode(fileCol.data_scale));
                             sColDataScale.appendChild(sColDataScaleOld);
 
-                            Element sColDataScalenNew = doc.createElement("new");
+                            Element sColDataScalenNew = doc.createElement("base");
                             sColDataScale.appendChild(sColDataScalenNew);
 
                             Element sColDataScaleState = doc.createElement("state");
@@ -821,12 +821,12 @@ public class XMLBuilder {
                             Element sColNullable = doc.createElement("sNullable");
                             columnElement.appendChild(sColNullable);
 
-                            Element sColNullableOld = doc.createElement("old");
+                            Element sColNullableOld = doc.createElement("file");
                             if (fileCol.nullable != null)
                                 sColNullableOld.appendChild(doc.createTextNode(fileCol.nullable));
                             sColNullable.appendChild(sColNullableOld);
 
-                            Element sColNullableNew = doc.createElement("new");
+                            Element sColNullableNew = doc.createElement("base");
                             sColNullable.appendChild(sColNullableNew);
 
                             Element sColNullableState = doc.createElement("state");
@@ -837,12 +837,12 @@ public class XMLBuilder {
                             Element sColDefaultLength = doc.createElement("iDefaultLength");
                             columnElement.appendChild(sColDefaultLength);
 
-                            Element sColDefaultLengthOld = doc.createElement("old");
+                            Element sColDefaultLengthOld = doc.createElement("file");
                             if (fileCol.default_length != null)
                                 sColDefaultLengthOld.appendChild(doc.createTextNode(fileCol.default_length));
                             sColDefaultLength.appendChild(sColDefaultLengthOld);
 
-                            Element sColDefaultLengthNew = doc.createElement("new");
+                            Element sColDefaultLengthNew = doc.createElement("base");
                             sColDefaultLength.appendChild(sColDefaultLengthNew);
 
                             Element sColDefaultLengthState = doc.createElement("state");
@@ -878,10 +878,10 @@ public class XMLBuilder {
                         Element sColOwner = doc.createElement("sOwner");
                         columnElement.appendChild(sColOwner);
 
-                        Element sColOwnerOld = doc.createElement("old");
+                        Element sColOwnerOld = doc.createElement("file");
                         sColOwner.appendChild(sColOwnerOld);
 
-                        Element sColOwnerNew = doc.createElement("new");
+                        Element sColOwnerNew = doc.createElement("base");
                         if (baseCol.owner != null)
                             sColOwnerNew.appendChild(doc.createTextNode(baseCol.owner));
                         sColOwner.appendChild(sColOwnerNew);
@@ -894,10 +894,10 @@ public class XMLBuilder {
                         Element sColDataType = doc.createElement("sDataType");
                         columnElement.appendChild(sColDataType);
 
-                        Element sColDataTypeOld = doc.createElement("old");
+                        Element sColDataTypeOld = doc.createElement("file");
                         sColDataType.appendChild(sColDataTypeOld);
 
-                        Element sColDataTypeNew = doc.createElement("new");
+                        Element sColDataTypeNew = doc.createElement("base");
                         if (baseCol.data_type != null)
                             sColDataTypeNew.appendChild(doc.createTextNode(baseCol.data_type));
                         sColDataType.appendChild(sColDataTypeNew);
@@ -910,10 +910,10 @@ public class XMLBuilder {
                         Element sColDataLength = doc.createElement("iDataLength");
                         columnElement.appendChild(sColDataLength);
 
-                        Element sColDataLengthOld = doc.createElement("old");
+                        Element sColDataLengthOld = doc.createElement("file");
                         sColDataLength.appendChild(sColDataLengthOld);
 
-                        Element sColDataLengthNew = doc.createElement("new");
+                        Element sColDataLengthNew = doc.createElement("base");
                         if (baseCol.data_length != null)
                             sColDataLengthNew.appendChild(doc.createTextNode(baseCol.data_length));
                         sColDataLength.appendChild(sColDataLengthNew);
@@ -926,10 +926,10 @@ public class XMLBuilder {
                         Element sColDataPrecision = doc.createElement("iDataPrecision");
                         columnElement.appendChild(sColDataPrecision);
 
-                        Element sColDataPrecisionOld = doc.createElement("old");
+                        Element sColDataPrecisionOld = doc.createElement("file");
                         sColDataPrecision.appendChild(sColDataPrecisionOld);
 
-                        Element sColDataPrecisionNew = doc.createElement("new");
+                        Element sColDataPrecisionNew = doc.createElement("base");
                         if (baseCol.data_precision != null)
                             sColDataPrecisionNew.appendChild(doc.createTextNode(baseCol.data_precision));
                         sColDataPrecision.appendChild(sColDataPrecisionNew);
@@ -942,10 +942,10 @@ public class XMLBuilder {
                         Element sColDataScale = doc.createElement("iDataScale");
                         columnElement.appendChild(sColDataScale);
 
-                        Element sColDataScaleOld = doc.createElement("old");
+                        Element sColDataScaleOld = doc.createElement("file");
                         sColDataScale.appendChild(sColDataScaleOld);
 
-                        Element sColDataScalenNew = doc.createElement("new");
+                        Element sColDataScalenNew = doc.createElement("base");
                         if (baseCol.data_scale != null)
                             sColDataScalenNew.appendChild(doc.createTextNode(baseCol.data_scale));
                         sColDataScale.appendChild(sColDataScalenNew);
@@ -958,10 +958,10 @@ public class XMLBuilder {
                         Element sColNullable = doc.createElement("sNullable");
                         columnElement.appendChild(sColNullable);
 
-                        Element sColNullableOld = doc.createElement("old");
+                        Element sColNullableOld = doc.createElement("file");
                         sColNullable.appendChild(sColNullableOld);
 
-                        Element sColNullableNew = doc.createElement("new");
+                        Element sColNullableNew = doc.createElement("base");
                         if (baseCol.nullable != null)
                             sColNullableNew.appendChild(doc.createTextNode(baseCol.nullable));
                         sColNullable.appendChild(sColNullableNew);
@@ -974,10 +974,10 @@ public class XMLBuilder {
                         Element sColDefaultLength = doc.createElement("iDefaultLength");
                         columnElement.appendChild(sColDefaultLength);
 
-                        Element sColDefaultLengthOld = doc.createElement("old");
+                        Element sColDefaultLengthOld = doc.createElement("file");
                         sColDefaultLength.appendChild(sColDefaultLengthOld);
 
-                        Element sColDefaultLengthNew = doc.createElement("new");
+                        Element sColDefaultLengthNew = doc.createElement("base");
                         if (baseCol.default_length != null)
                             sColDefaultLengthNew.appendChild(doc.createTextNode(baseCol.default_length));
                         sColDefaultLength.appendChild(sColDefaultLengthNew);
@@ -1010,12 +1010,12 @@ public class XMLBuilder {
                 Element sTblOwner = doc.createElement("sOwner");
                 tableElement.appendChild(sTblOwner);
 
-                Element sTblOwnerOld = doc.createElement("old");
+                Element sTblOwnerOld = doc.createElement("file");
                 if (fileTbl.owner != null)
                     sTblOwnerOld.appendChild(doc.createTextNode(fileTbl.owner));
                 sTblOwner.appendChild(sTblOwnerOld);
 
-                Element sTblOwnerNew = doc.createElement("new");
+                Element sTblOwnerNew = doc.createElement("base");
                 sTblOwner.appendChild(sTblOwnerNew);
 
                 Element sTblOwnerState = doc.createElement("state");
@@ -1026,12 +1026,12 @@ public class XMLBuilder {
                 Element sTblStatus = doc.createElement("sStatus");
                 tableElement.appendChild(sTblStatus);
 
-                Element sTblStatusOld = doc.createElement("old");
+                Element sTblStatusOld = doc.createElement("file");
                 if (fileTbl.status != null)
                     sTblStatusOld.appendChild(doc.createTextNode(fileTbl.status));
                 sTblStatus.appendChild(sTblStatusOld);
 
-                Element sTblStatusNew = doc.createElement("new");
+                Element sTblStatusNew = doc.createElement("base");
                 sTblStatus.appendChild(sTblStatusNew);
 
                 Element sTblStatusState = doc.createElement("state");
@@ -1042,12 +1042,12 @@ public class XMLBuilder {
                 Element sTblPartitioned = doc.createElement("sPartitioned");
                 tableElement.appendChild(sTblPartitioned);
 
-                Element sTblPartitionedOld = doc.createElement("old");
+                Element sTblPartitionedOld = doc.createElement("file");
                 if (fileTbl.partitioned != null)
                     sTblPartitionedOld.appendChild(doc.createTextNode(fileTbl.partitioned));
                 sTblPartitioned.appendChild(sTblPartitionedOld);
 
-                Element sTblPartitionedNew = doc.createElement("new");
+                Element sTblPartitionedNew = doc.createElement("base");
                 sTblPartitioned.appendChild(sTblPartitionedNew);
 
                 Element sTblPartitionedState = doc.createElement("state");
@@ -1058,12 +1058,12 @@ public class XMLBuilder {
                 Element sTblTemporary = doc.createElement("sTemporary");
                 tableElement.appendChild(sTblTemporary);
 
-                Element sTblTemporaryOld = doc.createElement("old");
+                Element sTblTemporaryOld = doc.createElement("file");
                 if (fileTbl.temporary != null)
                     sTblTemporaryOld.appendChild(doc.createTextNode(fileTbl.temporary));
                 sTblTemporary.appendChild(sTblTemporaryOld);
 
-                Element sTblTemporaryNew = doc.createElement("new");
+                Element sTblTemporaryNew = doc.createElement("base");
                 sTblTemporary.appendChild(sTblTemporaryNew);
 
                 Element sTblTemporaryState = doc.createElement("state");
@@ -1074,12 +1074,12 @@ public class XMLBuilder {
                 Element sTblCompression = doc.createElement("sCompression");
                 tableElement.appendChild(sTblCompression);
 
-                Element sTblCompressionOld = doc.createElement("old");
+                Element sTblCompressionOld = doc.createElement("file");
                 if (fileTbl.compression != null)
                     sTblCompressionOld.appendChild(doc.createTextNode(fileTbl.compression));
                 sTblCompression.appendChild(sTblCompressionOld);
 
-                Element sTblCompressionNew = doc.createElement("new");
+                Element sTblCompressionNew = doc.createElement("base");
                 sTblCompression.appendChild(sTblCompressionNew);
 
                 Element sTblCompressionState = doc.createElement("state");
@@ -1090,12 +1090,12 @@ public class XMLBuilder {
                 Element sTblLogging = doc.createElement("sLogging");
                 tableElement.appendChild(sTblLogging);
 
-                Element sTblLoggingOld = doc.createElement("old");
+                Element sTblLoggingOld = doc.createElement("file");
                 if (fileTbl.logging != null)
                     sTblLoggingOld.appendChild(doc.createTextNode(fileTbl.logging));
                 sTblLogging.appendChild(sTblLoggingOld);
 
-                Element sTblLoggingNew = doc.createElement("new");
+                Element sTblLoggingNew = doc.createElement("base");
                 sTblLogging.appendChild(sTblLoggingNew);
 
                 Element sTblLoggingState = doc.createElement("state");
@@ -1106,12 +1106,12 @@ public class XMLBuilder {
                 Element sTblCache = doc.createElement("sCache");
                 tableElement.appendChild(sTblCache);
 
-                Element sTblCacheOld = doc.createElement("old");
+                Element sTblCacheOld = doc.createElement("file");
                 if (fileTbl.cache != null)
                     sTblCacheOld.appendChild(doc.createTextNode(fileTbl.cache));
                 sTblCache.appendChild(sTblCacheOld);
 
-                Element sTblCacheNew = doc.createElement("new");
+                Element sTblCacheNew = doc.createElement("base");
                 sTblCache.appendChild(sTblCacheNew);
 
                 Element sTblCacheState = doc.createElement("state");
@@ -1122,12 +1122,12 @@ public class XMLBuilder {
                 Element sTblTableLock = doc.createElement("sTableLock");
                 tableElement.appendChild(sTblTableLock);
 
-                Element sTblTableLockOld = doc.createElement("old");
+                Element sTblTableLockOld = doc.createElement("file");
                 if (fileTbl.table_lock != null)
                     sTblTableLockOld.appendChild(doc.createTextNode(fileTbl.table_lock));
                 sTblTableLock.appendChild(sTblTableLockOld);
 
-                Element sTblTableLockNew = doc.createElement("new");
+                Element sTblTableLockNew = doc.createElement("base");
                 sTblTableLock.appendChild(sTblTableLockNew);
 
                 Element sTblTableLockState = doc.createElement("state");
@@ -1155,10 +1155,10 @@ public class XMLBuilder {
             Element sTblOwner = doc.createElement("sOwner");
             tableElement.appendChild(sTblOwner);
 
-            Element sTblOwnerOld = doc.createElement("old");
+            Element sTblOwnerOld = doc.createElement("file");
             sTblOwner.appendChild(sTblOwnerOld);
 
-            Element sTblOwnerNew = doc.createElement("new");
+            Element sTblOwnerNew = doc.createElement("base");
             if (baseTbl.owner != null)
                 sTblOwnerNew.appendChild(doc.createTextNode(baseTbl.owner));
             sTblOwner.appendChild(sTblOwnerNew);
@@ -1171,10 +1171,10 @@ public class XMLBuilder {
             Element sTblStatus = doc.createElement("sStatus");
             tableElement.appendChild(sTblStatus);
 
-            Element sTblStatusOld = doc.createElement("old");
+            Element sTblStatusOld = doc.createElement("file");
             sTblStatus.appendChild(sTblStatusOld);
 
-            Element sTblStatusNew = doc.createElement("new");
+            Element sTblStatusNew = doc.createElement("base");
             if (baseTbl.status != null)
                 sTblStatusNew.appendChild(doc.createTextNode(baseTbl.status));
             sTblStatus.appendChild(sTblStatusNew);
@@ -1187,10 +1187,10 @@ public class XMLBuilder {
             Element sTblPartitioned = doc.createElement("sPartitioned");
             tableElement.appendChild(sTblPartitioned);
 
-            Element sTblPartitionedOld = doc.createElement("old");
+            Element sTblPartitionedOld = doc.createElement("file");
             sTblPartitioned.appendChild(sTblPartitionedOld);
 
-            Element sTblPartitionedNew = doc.createElement("new");
+            Element sTblPartitionedNew = doc.createElement("base");
             if (baseTbl.partitioned != null)
                 sTblPartitionedNew.appendChild(doc.createTextNode(baseTbl.partitioned));
             sTblPartitioned.appendChild(sTblPartitionedNew);
@@ -1203,10 +1203,10 @@ public class XMLBuilder {
             Element sTblTemporary = doc.createElement("sTemporary");
             tableElement.appendChild(sTblTemporary);
 
-            Element sTblTemporaryOld = doc.createElement("old");
+            Element sTblTemporaryOld = doc.createElement("file");
             sTblTemporary.appendChild(sTblTemporaryOld);
 
-            Element sTblTemporaryNew = doc.createElement("new");
+            Element sTblTemporaryNew = doc.createElement("base");
             if (baseTbl.temporary != null)
                 sTblTemporaryNew.appendChild(doc.createTextNode(baseTbl.temporary));
             sTblTemporary.appendChild(sTblTemporaryNew);
@@ -1219,10 +1219,10 @@ public class XMLBuilder {
             Element sTblCompression = doc.createElement("sCompression");
             tableElement.appendChild(sTblCompression);
 
-            Element sTblCompressionOld = doc.createElement("old");
+            Element sTblCompressionOld = doc.createElement("file");
             sTblCompression.appendChild(sTblCompressionOld);
 
-            Element sTblCompressionNew = doc.createElement("new");
+            Element sTblCompressionNew = doc.createElement("base");
             if (baseTbl.compression != null)
                 sTblCompressionNew.appendChild(doc.createTextNode(baseTbl.compression));
             sTblCompression.appendChild(sTblCompressionNew);
@@ -1235,10 +1235,10 @@ public class XMLBuilder {
             Element sTblLogging = doc.createElement("sLogging");
             tableElement.appendChild(sTblLogging);
 
-            Element sTblLoggingOld = doc.createElement("old");
+            Element sTblLoggingOld = doc.createElement("file");
             sTblLogging.appendChild(sTblLoggingOld);
 
-            Element sTblLoggingNew = doc.createElement("new");
+            Element sTblLoggingNew = doc.createElement("base");
             if (baseTbl.logging != null)
                 sTblLoggingNew.appendChild(doc.createTextNode(baseTbl.logging));
             sTblLogging.appendChild(sTblLoggingNew);
@@ -1251,10 +1251,10 @@ public class XMLBuilder {
             Element sTblCache = doc.createElement("sCache");
             tableElement.appendChild(sTblCache);
 
-            Element sTblCacheOld = doc.createElement("old");
+            Element sTblCacheOld = doc.createElement("file");
             sTblCache.appendChild(sTblCacheOld);
 
-            Element sTblCacheNew = doc.createElement("new");
+            Element sTblCacheNew = doc.createElement("base");
             if (baseTbl.cache != null)
                 sTblCacheNew.appendChild(doc.createTextNode(baseTbl.cache));
             sTblCache.appendChild(sTblCacheNew);
@@ -1267,10 +1267,10 @@ public class XMLBuilder {
             Element sTblTableLock = doc.createElement("sTableLock");
             tableElement.appendChild(sTblTableLock);
 
-            Element sTblTableLockOld = doc.createElement("old");
+            Element sTblTableLockOld = doc.createElement("file");
             sTblTableLock.appendChild(sTblTableLockOld);
 
-            Element sTblTableLockNew = doc.createElement("new");
+            Element sTblTableLockNew = doc.createElement("base");
             if (baseTbl.table_lock != null)
                 sTblTableLockNew.appendChild(doc.createTextNode(baseTbl.table_lock));
             sTblTableLock.appendChild(sTblTableLockNew);

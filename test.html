@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css" />
+
+	<script type="text/javascript" src="js/json3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+
+  </head>
+  <body>
+
+	<blockquote>
+		<h4>Всего таблиц в базе и файле: 2</h4>
+		<h4>Всего таблиц в базе: 3</h4> 
+		<h4>Всего таблиц в файле: 2</h4> 
+	</blockquote>
+  
+<div class="panel-group" id="tblAccordion">
+	<div class="panel panel-default">
+    <div class="panel-heading" style="background: #F8DADA;">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#tblAccordion" href="#collapseCMS_WF_STATUS">
+          CMS_WF_STATUS (file)
+        </a>
+      </h4>
+    </div>
+    <div id="collapseCMS_WF_STATUS" class="panel-collapse collapse">
+      <div class="panel-body">
+		<table class="table" style="width: 40%;">
+			<tr>
+				<th>Properties</th>
+				<th>Values from file</th>
+				<th>Values from base</th>
+			</tr>
+			<tr class="danger">
+				<td>Owner</td>
+				<td>Вася</td>
+				<td>Петя</td>
+			</tr>
+			<tr class="success">
+				<td>Status</td>
+				<td>VALID</td>
+				<td>VALID</td>
+			</tr>		
+			<tr class="success">
+				<td>Partitioned</td>
+				<td>NO</td>
+				<td>NO</td>
+			</tr>		
+			<tr class="success">
+				<td>Temporary</td>
+				<td>N</td>
+				<td>N</td>
+			</tr>	
+			<tr class="success">
+				<td>Compression</td>
+				<td>DISABLED</td>
+				<td>DISABLED</td>
+			</tr>					
+			<tr class="danger">
+				<td>Logging</td>
+				<td>Yes</td>
+				<td></td>
+			</tr>			
+			<tr class="success">
+				<td>Cache</td>
+				<td>N</td>
+				<td>N</td>
+			</tr>	
+			<tr class="success">
+				<td>TableLock</td>
+				<td>ENABLED</td>
+				<td>ENABLED</td>
+			</tr>	
+		</table>
+      </div>
+    </div>
+  </div>
+	<div class="panel panel-default">
+    <div class="panel-heading" style="background: #EBFFEA;">
+      <h4 class="panel-title">
+	        <a data-toggle="collapse" data-parent="#tblAccordion" href="#collapseCMS_INQUIRY">
+	          CMS_INQUIRY (both)
+	        </a>
+	      </h4>
+	    </div>
+	    <div id="collapseCMS_INQUIRY" class="panel-collapse collapse">
+	      <div class="panel-body">
+					<table class="table" style="width: 40%;">
+				<tr>
+					<th>Properties</th>
+					<th>Values from file</th>
+					<th>Values from base</th>
+				</tr>
+				<tr class="danger">
+					<td>Owner</td>
+					<td>Вася</td>
+					<td>Петя</td>
+				</tr>
+				<tr class="success">
+					<td>Status</td>
+					<td>VALID</td>
+					<td>VALID</td>
+				</tr>		
+				<tr class="success">
+					<td>Partitioned</td>
+					<td>NO</td>
+					<td>NO</td>
+				</tr>		
+				<tr class="success">
+					<td>Temporary</td>
+					<td>N</td>
+					<td>N</td>
+				</tr>	
+				<tr class="success">
+					<td>Compression</td>
+					<td>DISABLED</td>
+					<td>DISABLED</td>
+				</tr>					
+				<tr class="danger">
+					<td>Logging</td>
+					<td>Yes</td>
+					<td></td>
+				</tr>			
+				<tr class="success">
+					<td>Cache</td>
+					<td>N</td>
+					<td>N</td>
+				</tr>	
+				<tr class="success">
+					<td>TableLock</td>
+					<td>ENABLED</td>
+					<td>ENABLED</td>
+				</tr>	
+			</table>
+	      </div>
+	    </div>
+	  </div>  
+	<div class="panel panel-default">
+    <div class="panel-heading" style="background: #EBFFEA;">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#tblAccordion" href="#collapseCMS_ATTR_VALUE">
+          CMS_ATTR_VALUE (both)
+        </a>
+      </h4>
+    </div>
+    <div id="collapseCMS_ATTR_VALUE" class="panel-collapse collapse">
+      <div class="panel-body">
+		<table class="table" style="width: 30%;">
+			<tr>
+				<th>Properties</th>
+				<th>Values from file</th>
+			</tr>
+			<tr>
+				<td>Owner</td>
+				<td>Вася</td>
+			</tr>
+			<tr>
+				<td>Status</td>
+				<td>VALID</td>
+			</tr>		
+			<tr>
+				<td>Partitioned</td>
+				<td>NO</td>
+			</tr>		
+			<tr>
+				<td>Temporary</td>
+				<td>N</td>
+			</tr>	
+			<tr>
+				<td>Compression</td>
+				<td>DISABLED</td>
+			</tr>					
+			<tr>
+				<td>Logging</td>
+				<td>Yes</td>
+			</tr>			
+			<tr>
+				<td>Cache</td>
+				<td>N</td>
+			</tr>	
+			<tr>
+				<td>TableLock</td>
+				<td>ENABLED</td>
+			</tr>	
+		</table>    
+      </div>
+    </div>
+  </div>
+	<div class="panel panel-default">
+    <div class="panel-heading" style="background: #FFFACB;">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#tblAccordion" href="#collapseCMS_ATTACHMENTS">
+          CMS_ATTACHMENTS (base)
+        </a>
+      </h4>
+    </div>
+    <div id="collapseCMS_ATTACHMENTS" class="panel-collapse collapse">
+      <div class="panel-body">
+	<table class="table" style="width: 30%;">
+		<tr>
+			<th>Properties</th>
+			<th>Values from base</th>
+		</tr>
+		<tr>
+			<td>Owner</td>
+			<td>Вася</td>
+		</tr>
+		<tr>
+			<td>Status</td>
+			<td>VALID</td>
+		</tr>		
+		<tr>
+			<td>Partitioned</td>
+			<td>NO</td>
+		</tr>		
+		<tr>
+			<td>Temporary</td>
+			<td>N</td>
+		</tr>	
+		<tr>
+			<td>Compression</td>
+			<td>DISABLED</td>
+		</tr>					
+		<tr>
+			<td>Logging</td>
+			<td>Yes</td>
+		</tr>			
+		<tr>
+			<td>Cache</td>
+			<td>N</td>
+		</tr>	
+		<tr>
+			<td>TableLock</td>
+			<td>ENABLED</td>
+		</tr>	
+	</table>  
+      </div>
+    </div>
+  </div>
+</div>  
+  </body>
+</html>
