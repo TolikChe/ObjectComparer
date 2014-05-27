@@ -1,140 +1,189 @@
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.SQLException;
 
 
 /**
  * Created by Anatoly.Cherkasov on 23.04.14.
+ *
+ * Класс содержит вего два метода: generate и compare
+ *
+ * Метод generate создает заданный файл и наполняет его данными на основе указанной схемы.
+ * Метод compare на основе существующего файла выполняет сравнение с указанной схемой и создает файл - результат сравненеия. поле этого к файле применятеся xslt преобразование для получения html отчета.
  */
+
 public class PosibleActions {
 
-    /* Эта функция генерит XML и складывает в файл */
-    public void generate( String fileName, String dbUser, String dbPass, String dbUrl ) {
-        // Соединимся с базой
-        OracleConnection conn = new OracleConnection (dbUser, dbPass, dbUrl);
+    /**
+     *  Эта функция генерит XML на основе информации из схемы. Результат помещается в файл.
+     * @param fileName Файл в который необходимо пометить рузельтат
+     * @param schema_params Параметры схемы к которой необходимо подключиться
+     */
+    public void generate( String fileName, DBParams schema_params ) throws SQLException, IOException, ParserConfigurationException {
 
-        // Получим информацию о таблицах
-        Info info = conn.getTablesInfo();
+        // Получим информацию о таблицах. Эта информация будет хранится в структуре типа Info
+        // Будет выполнено соединение со схемой и от туда считана информация
+        Info info = null;
+        try {
+            info = new Info(schema_params);
+        } catch (SQLException e) {
+            System.out.println("PosibleActions.generate: ошибка при получении информации из схемы");
+            e.printStackTrace();
+            throw e;
+        }
 
-        // Закроем соединение
-        conn.closeConnection();
+        // Если инофрмация получена успешно то надо собрать документ
+        String strXML = null;
+        try {
+            // Создадим построитель xml.
+            XMLBuilder xmlBuilder = new XMLBuilder();
+            // Попросим один из вариантов xml. (Возможно позже появятся другие)
+            strXML = xmlBuilder.genStandartXML(info);
+        } catch (ParserConfigurationException e) {
+            System.out.println("PosibleActions.generate: ошибка при построении xml");
+            e.printStackTrace();
+            throw e;
+        }
 
-        if (info != null) {
-            // Построим на основе информации XML документ
-            /* Теперь передадим собранную информацию построителю */
-            XMLBuilder xml = new XMLBuilder(info);
-
-            /* Попросим один из вариантов xml*/
-            String strXML = xml.genStandartXML();
-
-            // Запишем XML в файл
-            File file = new File(fileName);
-
-            FileOutputStream fop = null;
+        // Запишем полученный XML в файл
+        File file = new File(fileName);
+        // Если файла не существует то создадим его
+        if (!file.exists()) {
             try {
-                fop = new FileOutputStream(file);
-
-                // if file doesn't exists, then create it
-                if (!file.exists()) {
-                    file.createNewFile();
-                }
-
-                fop.write(strXML.getBytes());
-                fop.close();
-
-                System.out.println("Done");
+                file.createNewFile();
             } catch (IOException e) {
+                System.out.println("PosibleActions.generate: ошибка при создании файла результата");
                 e.printStackTrace();
-                System.out.println("Error in writing to file");
+                throw e;
             }
         }
+
+        // Выполним запись в файл
+        try {
+            FileOutputStream fop = new FileOutputStream(file);
+            fop.write(strXML.getBytes());
+            fop.close();
+        } catch (IOException e) {
+            System.out.println("PosibleActions.generate: ошибка при записи в файл");
+            e.printStackTrace();
+            throw e;
+        }
+
+        System.out.println("Generating done");
+
     }
 
     /* Эта функция, открывает файл и на основе него сравнивает есть ли объекты в базе с теме же параметрами */
     /* Делаем следующее. Считываем XML из файла в структуру. */
     /* Строим вторую структуру по текущему состоянию. */
     /* Начинаем сравнивать поэлементно. На выходе будет XML новой структуры. */
-    public void compare ( String fileName, String dbUser, String dbPass, String dbUrl ) {
+
+    /**
+     * Эта функция, открывает файл и на основе него сравнивает есть ли объекты в базе с теме же параметрами
+     * Делаем следующее. Считываем XML из файла в структуру.
+     * Строим вторую структуру по текущему состоянию.
+     * Начинаем сравнивать поэлементно. На выходе будет XML новой структуры.
+     * @param schema_params Параметры схемы к которой необходимо подключиться
+     * @param fileName Файл из которого необходимо считать информацию о схеме
+     * @throws SQLException
+     */
+    public void compare ( DBParams schema_params, String fileName ) throws Exception {
 
         String strXML = "";
         // Прочитаем текст из файла
-        File file = new File(fileName);
-        try{
-            if (!file.exists() || !file.isFile()) {
-                System.out.println("Файл не существует");
-                return;
-            }
-            // Будем читать в буффер
-            BufferedReader in = new BufferedReader( new InputStreamReader(new FileInputStream(file)));
-
-            // Что бы этономить на памяти будем конструировать строку построителем
-            StringBuffer stringBuffer = new StringBuffer();
-            String line;
-
-            while ((line = in.readLine()) != null) {
-                stringBuffer.append(line);
-            }
-
-            // Вот получившаяся строка
-            strXML = stringBuffer.toString();
+        try {
+         byte[] encoded = Files.readAllBytes(Paths.get(fileName));
+         strXML =  new String(encoded);
 
         } catch (IOException e) {
+            System.out.println("PosibleActions.compare: ошибка при чтении из файла");
             e.printStackTrace();
-            System.out.println("Ошибка при четнии из файла");
-            return;
+            throw e;
         }
 
+        // Создадим построитель - преобразователь xml.
+        XMLBuilder xmlBuilder = new XMLBuilder();
+
+
         // Преобразуем строку в XML и заполним объект info
-        XMLBuilder xml = new XMLBuilder();
-        xml.parseStandartXml(strXML);
-
-
-        // Получим текущую информацию о таблицах
-        // Соединимся с базой
-        OracleConnection conn = new OracleConnection (dbUser, dbPass, dbUrl);
-        // Получим текущую информацию о таблицах
-        Info info = conn.getTablesInfo();
-        // Закроем соединение
-        conn.closeConnection();
-
-
-
-        // Запустим сравнение
-        strXML = xml.compareStandartXML(info);
-
-        // Запишем XML в файл
-        File file_diff = new File("dif_file.xml");
-
-        FileOutputStream fop = null;
+        Info fileInfo = null;
         try {
-            fop = new FileOutputStream(file_diff);
+            // Нам нужно разобрать один из вариантов xml. (Возможно позже появятся другие)
+            fileInfo = xmlBuilder.parseStandartXml(strXML);
+        } catch (Exception e) {
+            System.out.println("PosibleActions.compare: ошибка при разборе xml");
+            e.printStackTrace();
+            throw e;
+        }
 
-            // if file doesn't exists, then create it
-            if (!file_diff.exists()) {
+        // Получим информацию о таблицах. Эта информация будет хранится в структуре типа Info
+        // Будет выполнено соединение со схемой и от туда считана информация
+        Info baseInfo = null;
+        try {
+            baseInfo = new Info(schema_params);
+        } catch (SQLException e) {
+            System.out.println("PosibleActions.compare: ошибка при получении информации из схемы");
+            e.printStackTrace();
+            throw e;
+        }
+
+        // Запустим сравнение. На выходе получим XML
+        String strDiffXML = null;
+        try {
+            strDiffXML = xmlBuilder.compareStandartXML(baseInfo, fileInfo);
+        } catch (Exception e) {
+            System.out.println("PosibleActions.compare: ошибка при сравнении информации из схемы и из файла");
+            e.printStackTrace();
+            throw e;
+        }
+
+        // Запишем XML в файл, этол сделано дял удобства разработки и в дальнейшем быстрой смены xslt без изменения приложения
+        // Запись можно не делдать так как ниже все равно оперируем переменной с xml а не файлом
+        File file_diff = new File("dif_file.xml");
+        // Если файла не существует то создадим его
+        if (!file_diff.exists()) {
+            try {
                 file_diff.createNewFile();
+            } catch (IOException e) {
+                System.out.println("PosibleActions.compare: ошибка при создании файла - результата сравнения");
+                e.printStackTrace();
+                throw e;
             }
+        }
 
-            fop.write(strXML.getBytes());
+        // Произведем запись в файл
+        try {
+            FileOutputStream fop = new FileOutputStream(file_diff);
+
+            fop.write(strDiffXML.getBytes());
             fop.close();
 
         } catch (IOException e) {
+            System.out.println("PosibleActions.compare: ошибка при записи файла - результата сравнения");
             e.printStackTrace();
-            System.out.println("Error in writing diff to file");
+            throw e;
         }
 
+        // Выполним преобразование xslt
         try {
             TransformerFactory factory = TransformerFactory.newInstance();
             Source xslt = new StreamSource(new File("dif_file.xsl"));
             Transformer transformer = factory.newTransformer(xslt);
 
             // Source text = new StreamSource(new File("dif_file.xml"));
-            Source text = new StreamSource( new ByteArrayInputStream( strXML.getBytes()));
+            Source text = new StreamSource( new ByteArrayInputStream( strDiffXML.getBytes()));
             transformer.transform(text, new StreamResult("output.html"));
         } catch (TransformerException e) {
+            System.out.println("PosibleActions.compare: ошибка при преобразования файла - результата сравнения в html");
             e.printStackTrace();
+            throw e;
         }
 
-        System.out.println("Done");
+        System.out.println("Comparing done");
     }
 }

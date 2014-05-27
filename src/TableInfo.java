@@ -24,44 +24,6 @@ public class TableInfo {
     ArrayList<ColumnInfo> columnInfoArrayList;
 
     /*
-    private void generateSqlList (){
-        sqlSelectList.add("SELECT count(*) " +
-                            "  FROM dba_tables" +
-                            " WHERE table_name = '" + name + "' AND owner = '"+ owner +"'");
-
-        sqlSelectList.add("SELECT count(*) " +
-                          "  FROM dba_tables" +
-                          " WHERE table_name = '" + name + "' AND owner = '"+ owner +"' and trim(status) = '"+status+"'");
-
-        sqlSelectList.add("SELECT count(*) " +
-                          "  FROM dba_tables" +
-                          " WHERE table_name = '" + name + "' AND owner = '"+ owner +"' and trim(partitioned) = '"+partitioned+"'");
-
-
-        sqlSelectList.add("SELECT count(*) " +
-                          "  FROM dba_tables" +
-                          " WHERE table_name = '" + name + "' AND owner = '"+ owner +"' and trim(temporary) = '"+temporary+"'");
-
-        sqlSelectList.add("SELECT count(*) " +
-                          "  FROM dba_tables" +
-                          " WHERE table_name = '" + name + "' AND owner = '"+ owner +"' and trim(compression) = '"+compression+"'");
-
-        sqlSelectList.add("SELECT count(*) " +
-                          "  FROM dba_tables" +
-                          " WHERE table_name = '" + name + "' AND owner = '"+ owner +"' and trim(logging) = '"+logging+"'");
-
-        sqlSelectList.add("SELECT count(*) " +
-                          "  FROM dba_tables" +
-                          " WHERE table_name = '" + name + "' AND owner = '"+ owner +"' and trim(cache) = '"+cache+"'");
-
-        sqlSelectList.add("SELECT count(*) " +
-                          "  FROM dba_tables" +
-                          " WHERE table_name = '" + name + "' AND owner = '" + owner + "' and trim(table_lock) = '" + table_lock + "'");
-    }
-    */
-
-
-    /*
     * Получаем значения из ResultSet. Берем значения только из первой строки.
     */
     public void setTableInfo(ResultSet tableResultSet, ResultSet columnResultSet ) throws SQLException {
@@ -127,5 +89,20 @@ public class TableInfo {
         columnInfoArrayList = new ArrayList<ColumnInfo>();
         // sqlSelectList = new ArrayList<String>();
     }
+
+
+    /**
+     * Получить объект-колонку по имени таблицы
+     * @param columnName Имя колонки
+     * @return
+     */
+    public ColumnInfo getColumnInfoByName (String columnName) {
+        for ( ColumnInfo col : this.columnInfoArrayList) {
+            if (col.name.equalsIgnoreCase(columnName))
+                return col;
+        }
+        return null;
+    }
+
 
 }

@@ -42,6 +42,7 @@ public class OracleConnection {
         /*Проверим что соединение установилось*/
         if (conn != null) {
             System.out.println("Connection OK!");
+            System.out.println("Schema " + this.user);
         } else {
             System.out.println("Failed to make connection!");
             return;
@@ -50,7 +51,7 @@ public class OracleConnection {
         /*Получим информацию  о соединении*/
         try {
             DatabaseMetaData dma = conn.getMetaData();
-            System.out.println("Connected to _ " + dma.getURL());
+            System.out.println("Connected to  _ " + dma.getURL());
             System.out.println("Driver        _ " + dma.getDriverName());
             System.out.println("Version       _ " + dma.getDriverVersion());
             System.out.println("__");
@@ -65,12 +66,12 @@ public class OracleConnection {
     /**
      * Генерим информацю о таблицах и колонках схемы, к которой подключились
      */
-    public Info getTablesInfo() {
+    public ArrayList<TableInfo> getTablesInfo() throws SQLException {
 
-        Info info = new Info();
+        ArrayList<TableInfo> tablesInfo = new ArrayList<TableInfo>();
 
         // Запрос для информации о таблице
-        String sqlTable = "SELECT trim(owner) as owner, "  +
+        String sqlTable = "SELECT trim(owner||'@'||ora_database_name ) as owner, "  +
                           "       trim(table_name) as table_name, " +
                           "       trim(status) as status, " +
                           "       trim(partitioned) as partitioned, " +
@@ -83,7 +84,7 @@ public class OracleConnection {
                           " WHERE table_name like 'CMS%' AND owner = '"+ this.user +"'";
 
         // Запрос для информации о колонках таблицы
-        String sqlColumn = "SELECT trim(owner) as owner, " +
+        String sqlColumn = "SELECT trim(owner||'@'||ora_database_name) as owner, " +
                             "      trim(table_name) as table_name, " +
                             "      trim(column_name) as column_name, " +
                             "      trim(data_type) as data_type, " +
@@ -112,7 +113,7 @@ public class OracleConnection {
                 TableInfo ti = new TableInfo();
                 ti.setTableInfo(tableResultSet,columnResultSet);
                 // Добавим объект в коллекцию
-                info.tableInfoArrayList.add( ti );
+                tablesInfo.add( ti );
                 // Закроем набор
                 columnResultSet.close();
                 colStatement.close();
@@ -121,40 +122,14 @@ public class OracleConnection {
             tableResultSet.close();
             tblStatement.close();
         } catch (SQLException e) {
-            System.out.println("Ошибка при получени информации о таблицах");
+            System.out.println("OracleConnection: Ошибка при выполнении запроса для получения информации о таблицах");
             e.printStackTrace();
-            return null;
+            throw e;
         }
 
         // Вернем информацию об объектах
-        return info;
+        return tablesInfo;
     }
-
-    /**
-     * Сравниваем информацю о таблицах и колонках схемы, к которой подключились, с тем что есть в файле.
-     */
-    /*
-    public void compareTablesInfo( Info info ) {
-
-        // Для каждой таблицы выстраиваю запрос и проверяю что такая таблица есть
-        for (TableInfo ti : info.tableInfoArrayList) {
-            // Запрос для информации о таблице
-            for (String sql : ti.sqlSelectList) {
-                System.out.println(sql);
-            }
-            System.out.println("---");
-            // Для каждой колонки таблицы выстраиваю запрос и проверяю что такая колонка есть
-            for (ColumnInfo ci : ti.columnInfoArrayList) {
-                //
-                // Запрос для информации о колонке
-                for (String sql : ci.sqlSelectList) {
-                    System.out.println(sql);
-                }
-            }
-            System.out.println("----------------------------------");
-        }
-    }
-    */
 
     /**
      * Закрываем соединение с базой

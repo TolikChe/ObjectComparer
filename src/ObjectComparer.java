@@ -6,50 +6,54 @@ public class ObjectComparer {
 
     public static void main(String[] args) {
 
+        ParamsParse params = null;
         /**
-         * Тут в зависимости от параметра мы либо делаем xml файл со структурой,
+         * Тут в зависимости от параметров мы либо делаем xml файл со структурой базы,
          * либо сравниваем существующий xml файл с тем что есть в базе
          */
-/*
-        if (args.length != 5) {
-            System.out.println("Неверный формат вызова");
-            System.out.println("java ObjectComparer (-c|-g) db_schema db_schema_pass db_url dif_file.xml");
+
+
+        // Проверим число параметров. В качестве параметра должен быть задан файл.
+        if (args.length != 1) {
+            System.out.println("Неверный формат вызова.");
+            System.out.println("В качетве параметра необходимо указать файл с параметрами.");
             return;
         }
-        String dbUser = args[1];
-        String dbPass = args[2];
-        String dbUrl = args[3];
-        String fileName = args[4];
-*/
 
-        String dbUrl = "jdbc:oracle:thin:@//srv2-ora20.net.billing.ru:1521/ntdb10.net.billing.ru";
-        String dbUser = "CRM_DAILY";
-        String dbPass = "CRM_DAILY";
-        String fileName = "file.xml";
+        // Прочитаем параметры из файла
+        try {
+            params = new ParamsParse(args[0]);
+        } catch (Exception e) {
+            System.out.println("ObjectComparer: В процессе разбора параметров возникла ошибка");
+            e.printStackTrace();
+        }
 
-        if ((args.length > 0) && (args[0].equalsIgnoreCase("-g") || args[0].equalsIgnoreCase("--generate"))) {
-            /* Если мы тут то надо генерить файл */
+
+        if (params.getMode().equalsIgnoreCase("generate")) {
+            // Если мы тут то надо генерить файл //
             System.out.println("generate");
 
-            // Сгенерим текст и сложим его в файл
-            PosibleActions action = new PosibleActions();
-            action.generate(fileName, dbUser, dbPass, dbUrl);
+            try {
+                // Сгенерим текст и сложим его в файл
+                PosibleActions action = new PosibleActions();
+                action.generate((String)params.getTarget(), (DBParams)params.getSource());
+            } catch (Exception e) {
+                System.out.println("ObjectComparer.generate: Ошибка при вызове генератора нового файла с информацией о схеме");
+                e.printStackTrace();
+            }
         }
-        else if ((args.length > 0) && (args[0].equalsIgnoreCase("-c") || args[0].equalsIgnoreCase("--compare"))) {
-            /* Если мы тут то надо сравнить существующий файл */
+        else if (params.getMode().equalsIgnoreCase("compare")) {
+            // Если мы тут то надо сравнить существующий файл //
             System.out.println("compare");
 
-            // Сгенерим текст и сложим его в файл
-            PosibleActions action = new PosibleActions();
-            action.compare(fileName, dbUser, dbPass, dbUrl);
-
-        }
-        else {
-            /* Если мы тут то параметры мы не разобрали и надо выйти и написать какие параметры мы ждем */
-            System.out.println("Параметры не разобраны");
-            System.out.println("Возможные параметры: -g | --generate  - Сгенерировать новый файл");
-            System.out.println("                     -c | --compare   - Сравнить с существующим файлом");
-            return;
+            try {
+                // Сгенерим текст и сложим его в файл
+                PosibleActions action = new PosibleActions();
+                action.compare((DBParams)params.getTarget(), (String)params.getSource());
+            } catch (Exception e) {
+                System.out.println("ObjectComparer.compare: Ошибка при вызове режима сравнениея файла со схемой");
+                e.printStackTrace();
+            }
         }
     }
 }

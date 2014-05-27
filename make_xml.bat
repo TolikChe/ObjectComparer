@@ -1,0 +1,1 @@
+AltovaXML.exe /xslt2 dif_file.xsl /in dif_file.xml /out output.html

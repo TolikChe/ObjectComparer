@@ -1,0 +1,15 @@
+<params>
+	<mode>compare</mode>
+	<source>
+		<file_name>file.xml</file_name>
+	</source>
+	<target>
+		<db>
+			<schema_name>CRM</schema_name>
+			<schema_password>CRM</schema_password>
+			<base_name>CRM01_1</base_name>
+			<base_host>srv2-3pd-crm05.net.billing.ru</base_host>
+			<base_port>1521</base_port>			
+		</db>
+	</target>
+</params>

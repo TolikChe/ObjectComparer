@@ -1,0 +1,15 @@
+<params>
+	<mode>generate</mode>
+	<source>
+		<db>
+			<schema_name>CRM_DAILY</schema_name>
+			<schema_password>CRM_DAILY</schema_password>
+			<base_name>ntdb10</base_name>
+			<base_host>srv2-ora20.net.billing.ru</base_host>
+			<base_port>1521</base_port>
+		</db>
+	</source>		
+	<target>
+		<file_name>file.xml</file_name>
+	</target>		
+</params>
