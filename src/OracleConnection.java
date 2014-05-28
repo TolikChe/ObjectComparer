@@ -81,7 +81,7 @@ public class OracleConnection {
                           "       trim(cache) as cache, " +
                           "       trim(table_lock) as table_lock " +
                           "  FROM dba_tables" +
-                          " WHERE table_name like 'CMS%' AND owner = '"+ this.user +"'";
+                          " WHERE /*table_name like 'CMS%' AND*/ owner = '"+ this.user +"'";
 
         // Запрос для информации о колонках таблицы
         String sqlColumn = "SELECT trim(owner||'@'||ora_database_name) as owner, " +
