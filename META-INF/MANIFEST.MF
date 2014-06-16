@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: .;C:/oracle/product/11.2.0/client/jdbc/lib/ojdbc6.jar
+Main-Class: ObjectComparer
+

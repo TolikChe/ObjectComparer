@@ -374,7 +374,7 @@
 															<td colspan="2"><b>Nullable</b></td>
 															<td colspan="2"><b>DefaultLength</b></td>
 														</tr>
-														<tr>
+														<tr align="center">
 															<td></td>
 															<td>file</td>
 															<td>base</td>
@@ -502,6 +502,29 @@
 																</xsl:choose>
 															</tr>
 														</xsl:for-each>
+														<xsl:for-each select="Columns/Column[@place='file']">
+															<tr align="center">
+																<td align="left"><span class="label label-warning">Только в файле</span> <xsl:value-of select="sColumnName"/></td>
+																<td colspan="2"><small><xsl:value-of select="sDataType/file"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDataLength/file"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDataPrecision/file"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDataScale/file"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="sNullable/file"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDefaultLength/file"/></small></td>
+															</tr>
+														</xsl:for-each>
+														<xsl:for-each select="Columns/Column[@place='base']">
+															<tr align="center">
+																<td align="left"><span class="label label-warning">Только в базе</span> <xsl:value-of select="sColumnName"/></td>
+																<td colspan="2"><small><xsl:value-of select="sDataType/base"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDataLength/base"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDataPrecision/base"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDataScale/base"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="sNullable/base"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDefaultLength/base"/></small></td>
+															</tr>
+														</xsl:for-each>														
+														
 													</table>
 												</div>
 											</td>
@@ -715,7 +738,7 @@
 															<td colspan="2"><b>Nullable</b></td>
 															<td colspan="2"><b>DefaultLength</b></td>
 														</tr>
-														<tr>
+														<tr align="center">
 															<td></td>
 															<td>file</td>
 															<td>base</td>
@@ -730,7 +753,7 @@
 															<td>file</td>
 															<td>base</td>
 														</tr>														
-														<xsl:for-each select="Columns/Column">
+														<xsl:for-each select="Columns/Column[@place='both']">
 															<tr align="center">
 																<td align="left"><xsl:value-of select="sColumnName"/></td>
 																<xsl:choose>
@@ -843,6 +866,28 @@
 																</xsl:choose>
 															</tr>
 														</xsl:for-each>
+														<xsl:for-each select="Columns/Column[@place='file']">
+															<tr align="center">
+																<td align="left"><span class="label label-danger">Только в файле</span> <xsl:value-of select="sColumnName"/></td>
+																<td colspan="2"><small><xsl:value-of select="sDataType/file"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDataLength/file"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDataPrecision/file"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDataScale/file"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="sNullable/file"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDefaultLength/file"/></small></td>
+															</tr>
+														</xsl:for-each>
+														<xsl:for-each select="Columns/Column[@place='base']">
+															<tr align="center">
+																<td align="left"><span class="label label-danger">Только в базе</span> <xsl:value-of select="sColumnName"/></td>
+																<td colspan="2"><small><xsl:value-of select="sDataType/base"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDataLength/base"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDataPrecision/base"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDataScale/base"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="sNullable/base"/></small></td>
+																<td colspan="2"><small><xsl:value-of select="iDefaultLength/base"/></small></td>
+															</tr>
+														</xsl:for-each>														
 													</table>
 												</div>
 											</td>
@@ -854,6 +899,7 @@
 					</div>
 				</xsl:if>
 
+<!--
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4 class="panel-title">
@@ -882,726 +928,10 @@
 				  </div>
 					</div>
 				</div>
-			</div>
-<!--			
-			<xsl:if test="count(//Tables/Table[*/state/text()='diff' or Columns/Column/*/state/text()='diff']) &gt; 0">
-				<h4>Информация по отличиям в таблицах</h4>
-				<table class="table table-striped table-bordered">
-					<tr align="center">
-						<td>
-							<b>Table</b>
-						</td>
-						<td>
-							<b>Owner</b>
-						</td>
-						<td colspan="2">
-							<b>Status</b>
-						</td>
-						<td colspan="2">
-							<b>Partitioned</b>
-						</td>
-						<td colspan="2">
-							<b>Temporary</b>
-						</td>
-						<td colspan="2">
-							<b>Compression</b>
-						</td>
-						<td colspan="2">
-							<b>Logging</b>
-						</td>
-						<td colspan="2">
-							<b>Cache</b>
-						</td>
-						<td colspan="2">
-							<b>TableLock</b>
-						</td>
-					</tr>
-					<xsl:for-each select="//Tables/Table[@place='base']">
-						<tr align="center">
-							<td align="left">
-								<span class="label label-warning">Таблица есть только в базе</span>
-								<xsl:value-of select="sTableName"/>
-							</td>
-							<td>
-								<xsl:value-of select="sOwner/base"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sStatus/base"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sPartitioned/base"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sTemporary/base"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sCompression/base"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sLogging/base"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sCache/base"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sTableLock/base"/>
-							</td>
-						</tr>
-					</xsl:for-each>
-					<xsl:for-each select="//Tables/Table[@place='file']">
-						<tr align="center">
-							<td align="left">
-								<span class="label label-danger">Таблица есть только в файле</span>
-								<xsl:value-of select="sTableName"/>
-							</td>
-							<td>
-								<xsl:value-of select="sOwner/file"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sStatus/file"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sPartitioned/file"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sTemporary/file"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sCompression/file"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sLogging/file"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sCache/file"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sTableLock/file"/>
-							</td>
-						</tr>
-					</xsl:for-each>
-					<xsl:if test=" count(//Tables/Table[*/state/text()='diff' and @place='both'])  &gt; 0 ">
-						<tr align="center">
-							<td colspan="2">Изменились свойства таблицы</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-						</tr>
-					</xsl:if>
-					<xsl:for-each select="//Tables/Table[*/state/text()='diff' and @place='both']">
-						<tr align="center">
-							<td align="left">
-								<span class="label label-info">Изменились свойства таблицы</span>
-								<xsl:value-of select="sTableName"/>
-							</td>
-							<td>
-								<xsl:value-of select="sOwner/file"/>
-							</td>
-							<xsl:choose>
-								<xsl:when test="sStatus/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sStatus/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sStatus/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sStatus/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sStatus/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="sPartitioned/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sPartitioned/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sPartitioned/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sPartitioned/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sPartitioned/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="sTemporary/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sTemporary/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sTemporary/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sTemporary/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sTemporary/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="sCompression/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sCompression/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sCompression/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sCompression/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sCompression/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="sLogging/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sLogging/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sLogging/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sLogging/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sLogging/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="sCache/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sCache/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sCache/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sCache/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sCache/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="sTableLock/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sTableLock/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sTableLock/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sTableLock/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sTableLock/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-						</tr>
-					</xsl:for-each>
-					<xsl:if test=" count(//Tables/Table[Columns/Column/*/state/text()='diff'])  &gt; 0 ">
-						<tr align="center">
-							<td colspan="2">Изменился состав или свойства колонок</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-						</tr>
-					</xsl:if>
-					<xsl:for-each select="//Tables/Table[Columns/Column/*/state/text()='diff']">
-						<tr align="center">
-							<td align="left">
-								<span class="label label-primary">Изменился состав или свойства колонок</span>
-								<xsl:value-of select="sTableName"/>
-							</td>
-							<td>
-								<xsl:value-of select="sOwner/file"/>
-							</td>
-							<xsl:choose>
-								<xsl:when test="sStatus/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sStatus/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sStatus/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sStatus/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sStatus/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="sPartitioned/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sPartitioned/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sPartitioned/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sPartitioned/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sPartitioned/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="sTemporary/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sTemporary/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sTemporary/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sTemporary/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sTemporary/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="sCompression/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sCompression/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sCompression/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sCompression/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sCompression/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="sLogging/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sLogging/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sLogging/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sLogging/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sLogging/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="sCache/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sCache/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sCache/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sCache/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sCache/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="sTableLock/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sTableLock/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sTableLock/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sTableLock/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sTableLock/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-						</tr>
-					</xsl:for-each>
-				</table>
-			</xsl:if>
-			<xsl:if test=" count(//Columns/Column[*/state/text()='diff'])  &gt; 0 ">
-				<br/>
-				<br/>
-				<h4>Информация по отличиям в колонках</h4>
-				<table class="table table-striped table-bordered">
-					<tr align="center">
-						<td>
-							<b>Column</b>
-						</td>
-						<td>
-							<b>Owner</b>
-						</td>
-						<td colspan="2">
-							<b>DataType</b>
-						</td>
-						<td colspan="2">
-							<b>DataLength</b>
-						</td>
-						<td colspan="2">
-							<b>DataPrecision</b>
-						</td>
-						<td colspan="2">
-							<b>DataScale</b>
-						</td>
-						<td colspan="2">
-							<b>Nullable</b>
-						</td>
-						<td colspan="2">
-							<b>DefaultLength</b>
-						</td>
-					</tr>
-					<xsl:for-each select="//Columns/Column[@place='base']">
-						<tr align="center">
-							<td align="left">
-								<span class="label label-warning">Колонка есть только в базе</span>
-								<xsl:value-of select="sTableName"/>.<xsl:value-of select="sColumnName"/>
-							</td>
-							<td>
-								<xsl:value-of select="sOwner/base"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sDataType/base"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="iDataLength/base"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="iDataPrecision/base"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="iDataScale/base"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sNullable/base"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="iDefaultLength/base"/>
-							</td>
-						</tr>
-					</xsl:for-each>
-					<xsl:for-each select="//Columns/Column[@place='file']">
-						<tr align="center">
-							<td align="left">
-								<span class="label label-danger">Колонка есть только в файле</span>
-								<xsl:value-of select="sTableName"/>.<xsl:value-of select="sColumnName"/>
-							</td>
-							<td>
-								<xsl:value-of select="sOwner/file"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sDataType/file"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="iDataLength/file"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="iDataPrecision/file"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="iDataScale/file"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="sNullable/file"/>
-							</td>
-							<td colspan="2">
-								<xsl:value-of select="iDefaultLength/file"/>
-							</td>
-						</tr>
-					</xsl:for-each>
-					<xsl:if test=" count(//Columns/Column[*/state/text()='diff' and @place='both'])  &gt; 0 ">
-						<tr align="center">
-							<td colspan="2">Изменились свойства</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-							<td>
-								<small>file</small>
-							</td>
-							<td>
-								<small>db</small>
-							</td>
-						</tr>
-					</xsl:if>
-					<xsl:for-each select="//Columns/Column[*/state/text()='diff' and @place='both']">
-						<tr align="center">
-							<td align="left">
-								<span class="label label-info">Изменились свойства колонки</span>
-								<xsl:value-of select="sTableName"/>.<xsl:value-of select="sColumnName"/>
-							</td>
-							<td>
-								<xsl:value-of select="sOwner/file"/>
-							</td>
-							<xsl:choose>
-								<xsl:when test="sDataType/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sDataType/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sDataType/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sDataType/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sDataType/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="iDataLength/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="iDataLength/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="iDataLength/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="iDataLength/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="iDataLength/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="iDataPrecision/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="iDataPrecision/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="iDataPrecision/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="iDataPrecision/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="iDataPrecision/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="iDataScale/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="iDataScale/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="iDataScale/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="iDataScale/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="iDataScale/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="sNullable/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sNullable/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="sNullable/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="sNullable/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="sNullable/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:choose>
-								<xsl:when test="iDefaultLength/state = 'diff'">
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="iDefaultLength/file"/>
-									</td>
-									<td style="background-color: #fcf8e3 !important;">
-										<xsl:value-of select="iDefaultLength/base"/>
-									</td>
-								</xsl:when>
-								<xsl:otherwise>
-									<td>
-										<xsl:value-of select="iDefaultLength/file"/>
-									</td>
-									<td>
-										<xsl:value-of select="iDefaultLength/base"/>
-									</td>
-								</xsl:otherwise>
-							</xsl:choose>
-						</tr>
-					</xsl:for-each>
-				</table>
-			</xsl:if>
 -->
+			</div>
+
+
 		</body>
 	</xsl:template>
 </xsl:stylesheet>

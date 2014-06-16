@@ -24,7 +24,7 @@ public class PosibleActions {
      * @param fileName Файл в который необходимо пометить рузельтат
      * @param schema_params Параметры схемы к которой необходимо подключиться
      */
-    public void generate( String fileName, DBParams schema_params ) throws SQLException, IOException, ParserConfigurationException {
+    public void generate( String fileName, DBParams schema_params ) throws SQLException, IOException, ParserConfigurationException, ClassNotFoundException {
 
         // Получим информацию о таблицах. Эта информация будет хранится в структуре типа Info
         // Будет выполнено соединение со схемой и от туда считана информация

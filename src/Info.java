@@ -11,7 +11,7 @@ public class Info {
      * Конструктор. Наполним объект информацией из схемы
      * @throws SQLException
      */
-    public Info(DBParams schema_params) throws SQLException {
+    public Info(DBParams schema_params) throws SQLException, ClassNotFoundException {
 
         // Выделим параметры подключения к схеме
         String dbUser = schema_params.getSchemaName();

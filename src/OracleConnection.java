@@ -2,12 +2,9 @@
  * Created by Anatoly.Cherkasov on 21.04.14.
  */
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
+import oracle.jdbc.OracleDriver;
 
 public class OracleConnection {
 
@@ -24,11 +21,12 @@ public class OracleConnection {
      * @param password Пароль для схемы
      * @param dbUrl    URL строчка с подключением вида jdbc:oracle:thin:@machine_name:1521:database_name
      */
-    public OracleConnection(String user, String password, String dbUrl) {
+    public OracleConnection(String user, String password, String dbUrl) throws ClassNotFoundException {
         this.jdbcUrl = dbUrl;
         this.user = user;
         this.password = password;
 
+        Class.forName("oracle.jdbc.OracleDriver");
 
         /*Попытаемся установить соединение*/
         try {
